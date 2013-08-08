@@ -68,7 +68,10 @@ require_once('config.php');
               <td data-bind="text: fname() + ' ' + lname()"></td>
               <td data-bind="text: confirmation()"></td>
               <td data-bind="text: datetime()"></td>
-              <td><button class="btn btn-danger" data-bind="click: $parent.removeCheckin, attr: {id: $index}"><i class="icon-remove icon-white"></i></button></td>
+              <td>
+                <button class="btn btn-success" data-bind="attr: {id: $index}"><i class="icon-pencil icon-white"></i></button>
+                <button class="btn btn-danger" data-bind="click: $parent.removeCheckin, attr: {id: $index}"><i class="icon-remove icon-white"></i></button>
+              </td>
             </tr>    
             
           </tbody> 

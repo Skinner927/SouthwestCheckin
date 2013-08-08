@@ -48,7 +48,10 @@ if (isset($defaultFill) && $defaultFill === true) {
     datetime NUMERIC,
     created NUMERIC,
     run NUMERIC,
-    success NUMERIC
+    success NUMERIC,
+    password TEXT,
+    salt TEXT,
+    hash TEXT
     )');
     
   $checkin = array(
