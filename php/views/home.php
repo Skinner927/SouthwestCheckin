@@ -1,0 +1,109 @@
+<?php
+/*
+  Copyright (C) 2013  Dennis Skinner skinner927@gmail.coms
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+require_once('config.php');
+?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><?php echo $site['title'];?></title>
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+    <style type="text/css">
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+  </head>
+  <body>
+  
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#"><?php echo $site['title'];?></a>
+          <div class="nav-collapse collapse">
+            <ul class="nav" data-bind="foreach: pages">
+              <li data-bind="css: { active: $data == $root.currentPage() }, click: $root.goToPage"><a href="#" data-bind="text: $data"></a></li>
+            </ul>            
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      
+      <!-- List View -->
+      <div data-bind="visible: $root.currentPage() == 'List'">
+        <h2>Check In Queue</h2>
+        <table class="table table-hover" >
+          <thead><tr><th>Name</th><th>Confirmation #</th><th>Date\Time (Eastern)</th><th>Remove</th></tr></thead>
+          
+          <tbody data-bind="foreach: checkinList">
+            
+            <tr>
+              <td data-bind="text: fname() + ' ' + lname()"></td>
+              <td data-bind="text: confirmation()"></td>
+              <td data-bind="text: datetime()"></td>
+              <td><button class="btn btn-danger" data-bind="click: $parent.removeCheckin, attr: {id: $index}"><i class="icon-remove icon-white"></i></button></td>
+            </tr>    
+            
+          </tbody> 
+        </table>
+      </div>
+      <!-- /List View -->
+      
+    </div> <!-- /container -->
+    
+    <script type="text/template">
+      <div>
+       <div class="input-append date" data-bind="dateTimePicker: true">
+                  <input data-format="MM/dd/yyyy HH:mm PP" type="text" data-bind="value: datetime()"></input>
+                  <span class="add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                  </span>
+                </div>
+      </div>
+    </script>
+
+    <!-- JQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Knockout -->
+    <script src="js/knockout.js"></script>
+    <!-- Sammy.js -->
+    <script src="js/sammy.js" type="text/javascript"></script>
+    <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+    <script src="js/respond.js" type="text/javascript"></script>
+    <!-- Date/Time Picker (http://tarruda.github.io/bootstrap-datetimepicker/) -->
+    <script src="js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <!-- Moment Date/Time library -->
+    <script src="js/moment.min.js" type="text/javascript"></script>
+    <!-- SPA -->
+    <script src="js/spa.js" type="text/javascript"></script>
+  </body>
+</html>
