@@ -5,7 +5,7 @@
  *
  * 	DB::$c = new PDO($dsn);
  *
- * https://github.com/Xeoncross/DByte/blob/master/DB.php
+ * https://github.com/Xeoncross/DByte
  * @author	David Pennington
  * @copyright	(c) 2012 xeoncross.com
  * @license	MIT License <http://www.opensource.org/licenses/mit-license.php>

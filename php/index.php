@@ -25,10 +25,14 @@ Flight::route('/', function(){
 });
 
 // Returns Checkin rows
-Flight::route('/api/list(/@id:[0-9]+)', function($id){
+Flight::route('GET /api/list(/@id:[0-9]+)', function($id){
   echo json_encode(Checkin::get($id));
 });
 
+// Handles an update checkin request
+Flight::route('POST /api/update', function(){
+  echo json_encode(Checkin::update(Flight::request()));
+});
 
 
 Flight::start();

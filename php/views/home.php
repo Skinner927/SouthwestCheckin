@@ -16,7 +16,7 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-require_once('config.php');
+require('config.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -99,29 +99,31 @@ require_once('config.php');
         </div>
         <!-- Edit Block -->
         <div class="row-fluid editBlock" data-bind="attr: {editfor: $index()}">
-          <div class="span3">
-            <input type="text" data-bind="value: fname" placeholder="First Name" /><br/>
-            <input type="text" data-bind="value: lname" placeholder="Last Name" />
-          </div>
-          <div class="span3">
-            <input type="text" data-bind="value: confirmation" class="input-small" placeholder="Confirmation #" /><br/>
-            <div class="control-group error">
-              <input type="password" name="password" placeholder="Password" />
-              <span class="help-block">Use the same password as when created.</span>
+          <form data-bind="submit: $root.updateCheckin" method="POST">
+            <div class="span3">
+              <input type="text" data-bind="value: fname" placeholder="First Name" /><br/>
+              <input type="text" data-bind="value: lname" placeholder="Last Name" />
             </div>
-          </div>
-          <div class="span3">
-            <div class="input-append date" data-bind="dateTimePicker: true">
-              <input data-format="MM/dd/yyyy HH:mm PP" type="text" data-bind="value: datetime" value=""></input>
-              <span class="add-on">
-                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-              </span>
+            <div class="span3">
+              <input type="text" data-bind="value: confirmation" class="input-small" placeholder="Confirmation #" /><br/>
+              <div class="control-group error" style="padding-bottom: 1em;">
+                <input type="password" name="password" placeholder="Password" />
+                <span class="help-block" style="position:absolute; z-index:50;">Use the same password as when created. Required to save changes.</span>
+              </div>
             </div>
-            <div style="margin-top: 10px;">
-              <button class="btn btn-success" style="margin-right: 5px"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Cancel</button>
+            <div class="span3">
+              <div class="input-append date" data-bind="dateTimePicker: true">
+                <input data-format="MM/dd/yyyy HH:mm PP" type="text" data-bind="value: datetime" value=""></input>
+                <span class="add-on">
+                  <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                </span>
+              </div>
+              <div style="margin-top: 10px;">
+                <button class="btn btn-success" style="margin-right: 5px" data-bind="enableEditSave: true"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Cancel</button>
+              </div>
             </div>
-          </div>
-          <div class="span3"></div>
+            <div class="span3"></div>
+          </form>
         </div>
         <!-- /ko -->
       </div>
@@ -166,5 +168,7 @@ require_once('config.php');
     <script src="js/moment.min.js" type="text/javascript"></script>
     <!-- SPA -->
     <script src="js/spa.js" type="text/javascript"></script>
+    <!-- Crypto Lib -->
+    <script src="js/sha512.js"></script>
   </body>
 </html>

@@ -17,6 +17,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 require_once('db.php');
+require('config.php');
 
 // Database Path
 $sqliteDb = '../checkin.sqlite3';
@@ -60,7 +61,9 @@ if (isset($defaultFill) && $defaultFill === true) {
     'lname' => 'builder',
     'confirmation' => 'XYZ123',
     'datetime' => 1383932307,
-    'created' => 1375994309
+    'created' => 1375994309,
+    'password' => '31bca02094eb78126a517b206a88c73cfa9ec6f704c7030d18212cace820f025f00bf0ea68dbf3f3a5436ca63b53bf7bf80ad8d5de7d8359d0b7fed9dbc3ab99',
+    'salt' => 'apple'
     );
   DB::insert(TABLECHECKIN, $checkin);
   
@@ -69,7 +72,9 @@ if (isset($defaultFill) && $defaultFill === true) {
     'lname' => 'Funny',
     'confirmation' => '123QRX',
     'datetime' => 1383932307,
-    'created' => 1375994309
+    'created' => 1375994309,
+    'password' => '31bca02094eb78126a517b206a88c73cfa9ec6f704c7030d18212cace820f025f00bf0ea68dbf3f3a5436ca63b53bf7bf80ad8d5de7d8359d0b7fed9dbc3ab99',
+    'salt' => 'apple'
     );
   DB::insert(TABLECHECKIN, $checkin);
   
@@ -78,7 +83,9 @@ if (isset($defaultFill) && $defaultFill === true) {
     'lname' => 'frank',
     'confirmation' => '132sdf',
     'datetime' => 1383932307,
-    'created' => 1375994309
+    'created' => 1375994309,
+    'password' => '31bca02094eb78126a517b206a88c73cfa9ec6f704c7030d18212cace820f025f00bf0ea68dbf3f3a5436ca63b53bf7bf80ad8d5de7d8359d0b7fed9dbc3ab99',
+    'salt' => 'apple'
     );
   DB::insert(TABLECHECKIN, $checkin);
 }
@@ -87,10 +94,46 @@ if (isset($defaultFill) && $defaultFill === true) {
 class Checkin {
   // Gets the checking with the specified id or all if no id
   public static function get($id = 0) {    
-    if($id == 0 || $id == null)
-      return DB::fetch('SELECT * from "'.TABLECHECKIN.'"');
+    if($id == null || $id == 0)
+      return DB::fetch('SELECT id, lname, fname, confirmation, datetime FROM "'.TABLECHECKIN.'"');
     else
-      return DB::row('SELECT * from "'.TABLECHECKIN.'" WHERE id = ?', array($id));    
+      return DB::row('SELECT id, lname, fname, confirmation, datetime FROM "'.TABLECHECKIN.'" WHERE id = ?', array($id));    
+  }
+  
+  // Updates a Checkin row
+  public static function update($request) {
+    // Get our post data
+    $data = json_decode($request->data['data']);    
+    
+    // Grab the row's password and salt
+    $row = DB::row('SELECT password, salt FROM "'.TABLECHECKIN.'" WHERE id = ?', array($data->id));
+    
+    // Did we fail?
+    if($row === false) {
+      return array('error' => "Invalid ID, Couldn't find row");
+    }
+    
+    // Password is double sha512 hashed from client, add the salt and hash again to compare
+    $clientPass = trim($data->password) + $row->salt;
+    $clientPass = hash('sha512', $clientPass);
+    
+    // Valid pass?
+    if($clientPass != $row->password) {
+      return array('error' => "Invalid Password");
+    }
+    
+    // Fix the datetime to be in proper format
+    $d = date_create_from_format('m/d/Y h:i A', $data->datetime);
+    $data->datetime = $d->format('U');
+    
+    // Remove the password property because we don't want to update that
+    unset($data->password);
+    
+    // We got here? Update it!
+    DB::update(TABLECHECKIN, (array)$data, $data->id);
+    
+    // Nothing's wrong!
+    return array();
   }
 }
 ?>

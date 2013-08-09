@@ -17,7 +17,8 @@
 */
 
 // Represents a checkin row
-function Checkin(data) { console.log('newCheckin', data);
+function Checkin(data) {
+  this.id = ko.observable(data.id);
   this.fname = ko.observable(data.fname);
   this.lname = ko.observable(data.lname);
   this.confirmation = ko.observable(data.confirmation);
@@ -75,6 +76,33 @@ function CheckinViewModel() {
     self.currentCheckinBackup = null; 
   };
   
+  // When the edit form is submitted, this processes it
+  self.updateCheckin = function(){
+    // Get the id so we can access the form
+    var id = self.checkinList.indexOf(this);
+    var form = $("div[editfor='" + id + "']").find('form').eq(0);
+    
+    var data = ko.toJS(this);
+    // This is still insecure if sent over http but it'll slow down the scriptkiddies
+    data.password = CryptoJS.SHA512(CryptoJS.SHA512(form.find("input[name='password']").val())).toString();
+    
+    // Post the update
+    $.post('api/update', {data: JSON.stringify(data)}, function(result){
+      if(result.error){
+        // there was an error!
+        alert(result.error);
+      }
+      else {
+        // Success
+        self.currentCheckinEdit(null); 
+        self.currentCheckinBackup = null; 
+      }
+    }, 'json');
+    
+    
+    return false;
+  };
+  
   // Behaviours    
   self.goToPage = function(page) { location.hash = page };
     
@@ -87,6 +115,11 @@ function CheckinViewModel() {
       
       // Default
       this.get('', function() { this.app.runRoute('get', '#List') });
+      
+      // Override this function so that Sammy doesn't mess with forms
+      this._checkFormSubmission = function(form) {
+          return (false);
+      };
   }).run();
 }
 
@@ -132,6 +165,25 @@ ko.bindingHandlers.hideRow = {
         el.siblings("div[editfor='" + el.attr('id') + "']").slideUp(500);      
       }
     }
+  }
+}
+
+// Enables or disables the button upon validation
+ko.bindingHandlers.enableEditSave = {
+  init: function(element) {
+    var el = $(element);
+    var pass = el.parents('form').eq(0).find("input[name='password']");
+    
+    //init
+    el.attr('disabled', 'disabled');
+    
+    pass.keyup(function(){
+      // disable the button if password is too short
+      if($(this).val().length > 0)
+        el.removeAttr('disabled');
+      else
+        el.attr('disabled', 'disabled');
+    });   
   }
 }
 
