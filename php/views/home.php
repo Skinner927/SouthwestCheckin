@@ -84,6 +84,32 @@ require('config.php');
       
       <!-- List View -->
       <div data-bind="visible: $root.currentPage() == 'List'">
+        <h2>Add Flight</h2>
+        <div class="well well-small">
+          <form id="newCheckinForm">
+          <div class="container">
+            <div class="span3">
+              <input type="text" name="fname" placeholder="First Name" /><br/>
+              <input type="text" name="lname" placeholder="Last Name" />
+            </div>
+            <div class="span3">
+              <input type="text" name="confirmation" placeholder="Confirmation #" /><br/>
+              <input type="password" name="password" placeholder="New Password" />  
+            </div>
+            <div class="span3">
+              <div class="input-append date" data-bind="dateTimePicker: true">
+                <input data-format="MM/dd/yyyy HH:mm PP" type="text" name="datetime" placeholder="Flight Date" />
+                <span class="add-on">
+                  <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                </span>
+              </div>
+              <div style="margin-top: 10px;">
+                <button class="btn btn-success" type="submit" style="margin-right: 5px"><i class="icon-plus icon-white"></i> Add</button>
+              </div>
+            </div>
+            </div>
+          </form>
+        </div>
         <h2>Check In Queue</h2>
         <div class="row-fluid">
           <div class="span3"><h5>Name</h5></div>
