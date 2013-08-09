@@ -19,13 +19,17 @@
 require 'api.php';
 require 'flight/Flight.php';
 
+// This is the only user route for this single page app
 Flight::route('/', function(){
     Flight::render('home.php');
 });
 
+// Returns Checkin rows
 Flight::route('/api/list(/@id:[0-9]+)', function($id){
   echo json_encode(Checkin::get($id));
 });
+
+
 
 Flight::start();
 ?>

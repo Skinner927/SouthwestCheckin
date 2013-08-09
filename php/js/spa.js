@@ -29,6 +29,7 @@ function CheckinViewModel() {
   var self = this;
   self.pages = ['List', 'Reports']; // Defined pages
   self.currentPage = ko.observable();
+  self.currentCheckinEdit = ko.observable();
   
   // Later load this with AJAX
   self.checkinList = ko.observableArray([]);
@@ -40,6 +41,18 @@ function CheckinViewModel() {
   
   // Operations
   self.removeCheckin = function(checkin) { self.checkinList.destroy(checkin); };
+  self.editCheckin = function(checkin) {
+    // Set element to current edit
+    self.currentCheckinEdit(checkin);
+    
+    var id = self.checkinList.indexOf(checkin);
+    
+    
+    
+    //$('tr#'+id).fadeTo(500, 0.5);
+  };
+  
+  self.Temp = function(){ self.currentCheckinEdit(null); };
   
   // Behaviours    
   self.goToPage = function(page) { location.hash = page };
@@ -64,6 +77,38 @@ ko.bindingHandlers.dateTimePicker = {
       pick12HourFormat: true, 
       pickSeconds: false
     });
+  }
+}
+
+// Properly fades out and disables rows
+ko.bindingHandlers.hideRow = {
+  update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext){
+    if(valueAccessor() == true){
+      // Save so we can show the element again later
+      var el = $(element);
+      el.data('gone', true);
+      
+      // Disable all buttons
+      el.find('button').attr("disabled", "disabled");
+      el.fadeTo(200, 0.3);
+      
+      
+      console.log('hide: ', element);
+    }
+    else {
+      if($(element).data('gone') === true) {
+        // Revert everything above
+        var el = $(element);
+        el.data('gone', false);
+        
+        // Fade In (el.fadeIn wasn't working)
+        el.fadeTo(200, 1.0, function(){
+          el.find("button").removeAttr('disabled');
+        });
+      
+        console.log('show: ', element);
+      }
+    }
   }
 }
 

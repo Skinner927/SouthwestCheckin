@@ -51,7 +51,8 @@ if (isset($defaultFill) && $defaultFill === true) {
     success NUMERIC,
     password TEXT,
     salt TEXT,
-    hash TEXT
+    hash TEXT,
+    email TEXT
     )');
     
   $checkin = array(
