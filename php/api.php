@@ -55,14 +55,15 @@ if (isset($defaultFill) && $defaultFill === true) {
     hash TEXT,
     email TEXT
     )');
-    
+  
+  // Default passwords are: banana
   $checkin = array(
     'fname' => 'bob',
     'lname' => 'builder',
     'confirmation' => 'XYZ123',
     'datetime' => 1383932307,
     'created' => 1375994309,
-    'password' => '31bca02094eb78126a517b206a88c73cfa9ec6f704c7030d18212cace820f025f00bf0ea68dbf3f3a5436ca63b53bf7bf80ad8d5de7d8359d0b7fed9dbc3ab99',
+    'password' => '40a52f71e03e9a8dfa276bc552e7cacf966f37ff38c77cee705e1b4c3886ae1c58b60e87b172c0ef637fdae9c6f84fd652b1d7cc7826b7331dfe92c05437ef67',
     'salt' => 'apple'
     );
   DB::insert(TABLECHECKIN, $checkin);
@@ -73,7 +74,7 @@ if (isset($defaultFill) && $defaultFill === true) {
     'confirmation' => '123QRX',
     'datetime' => 1383932307,
     'created' => 1375994309,
-    'password' => '31bca02094eb78126a517b206a88c73cfa9ec6f704c7030d18212cace820f025f00bf0ea68dbf3f3a5436ca63b53bf7bf80ad8d5de7d8359d0b7fed9dbc3ab99',
+    'password' => '40a52f71e03e9a8dfa276bc552e7cacf966f37ff38c77cee705e1b4c3886ae1c58b60e87b172c0ef637fdae9c6f84fd652b1d7cc7826b7331dfe92c05437ef67',
     'salt' => 'apple'
     );
   DB::insert(TABLECHECKIN, $checkin);
@@ -84,7 +85,7 @@ if (isset($defaultFill) && $defaultFill === true) {
     'confirmation' => '132sdf',
     'datetime' => 1383932307,
     'created' => 1375994309,
-    'password' => '31bca02094eb78126a517b206a88c73cfa9ec6f704c7030d18212cace820f025f00bf0ea68dbf3f3a5436ca63b53bf7bf80ad8d5de7d8359d0b7fed9dbc3ab99',
+    'password' => '40a52f71e03e9a8dfa276bc552e7cacf966f37ff38c77cee705e1b4c3886ae1c58b60e87b172c0ef637fdae9c6f84fd652b1d7cc7826b7331dfe92c05437ef67',
     'salt' => 'apple'
     );
   DB::insert(TABLECHECKIN, $checkin);
@@ -114,7 +115,7 @@ class Checkin {
     }
     
     // Password is double sha512 hashed from client, add the salt and hash again to compare
-    $clientPass = trim($data->password) + $row->salt;
+    $clientPass = trim($data->password) . $row->salt;
     $clientPass = hash('sha512', $clientPass);
     
     // Valid pass?
@@ -131,6 +132,35 @@ class Checkin {
     
     // We got here? Update it!
     DB::update(TABLECHECKIN, (array)$data, $data->id);
+    
+    // Nothing's wrong!
+    return array();
+  }
+  
+  // Deletes a row 
+  public static function delete($request) {
+    // Get our post data
+    $data = json_decode($request->data['data']);    
+    
+    // Grab the row's password and salt
+    $row = DB::row('SELECT password, salt FROM "'.TABLECHECKIN.'" WHERE id = ?', array($data->id));
+    
+    // Did we fail?
+    if($row === false) {
+      return array('error' => "Invalid ID, Couldn't find row");
+    }
+    
+    // Password is double sha512 hashed from client, add the salt and hash again to compare
+    $clientPass = trim($data->password) . $row->salt;
+    $clientPass = hash('sha512', $clientPass);
+    
+    // Valid pass?
+    if($clientPass != $row->password) {
+      return array('error' => "Invalid Password!");
+    }
+    
+    // We got here? Delete it!
+    DB::query('DELETE FROM "'.TABLECHECKIN.'" WHERE id = ?', array($data->id));
     
     // Nothing's wrong!
     return array();

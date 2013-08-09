@@ -40,6 +40,10 @@ require('config.php');
         height: 30px;
       }
       
+      .lastRow {
+        border-bottom-width: 1px;
+      }
+      
       .rowLikeTable:hover {
         background-color: #F5F5F5;
       }
@@ -88,7 +92,7 @@ require('config.php');
           <div class="span3"><h5>&nbsp;</h5></div>
         </div>
         <!-- ko foreach: checkinList() -->
-        <div class="row-fluid rowLikeTable" data-bind="attr: {id: $index()}, hideRow: $data == $root.currentCheckinEdit(), style: { borderBottomWidth: $index() == ($root.checkinList().length - 1)? '1px' : '0px'}">
+        <div class="row-fluid rowLikeTable" data-bind="attr: {id: $index()}, hideRow: $data == $root.currentCheckinEdit(), css: { lastRow: $index() == ($root.visibleCheckins().length - 1)}">
           <div class="span3" data-bind="text: fname() + ' ' + lname()"></div>
           <div class="span3" data-bind="text: confirmation"></div>
           <div class="span3" data-bind="text: datetime"></div>
@@ -119,7 +123,7 @@ require('config.php');
                 </span>
               </div>
               <div style="margin-top: 10px;">
-                <button class="btn btn-success" style="margin-right: 5px" data-bind="enableEditSaveValidate: true"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Cancel</button>
+                <button class="btn btn-success" style="margin-right: 5px" data-bind="enableEditSaveValidate: true"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Close</button>
               </div>
             </div>
             <div class="span3"></div>
@@ -131,26 +135,32 @@ require('config.php');
       
     </div> <!-- /container -->
     
-    <script type="text/html" id="editCheckinTemplate">
-      <div>
-        <table class="table table-hover" >
-          <tr>
-            <td><legend>First Name</legend><input type="text" data-bind="value: fname()" /></td>
-          </tr>
-        </table>
+    <div class="modal hide fade" id="modal-password">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Remove Check In</h3>
       </div>
-    </script>
+      <div class="modal-body">
+        <p>Enter password to remove check in</p>
+        <input id="modal-password-password" type="password" />
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" id="modal-password-submit" data-dismiss="modal" class="btn btn-primary" data-bind="click: $root.removeCheckinFinish">Submit</a>
+      </div>
+    </div>
     
-    <script type="text/html" id="fsd">
-      <div>
-       <div class="input-append date" data-bind="dateTimePicker: true">
-                  <input data-format="MM/dd/yyyy HH:mm PP" type="text" data-bind="value: datetime()"></input>
-                  <span class="add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                  </span>
-                </div>
+    <div class="modal hide fade" id="modal-blank">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="modal-blank-title">Remove Check In</h3>
       </div>
-    </script>
+      <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" id="modal-blank-ok">Ok</a>
+      </div>
+    </div>
+    
+   
 
     <!-- JQuery -->
     <script src="js/jquery.js"></script>

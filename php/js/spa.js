@@ -33,8 +33,7 @@ function CheckinViewModel() {
   self.pages = ['List', 'Reports']; // Defined pages
   self.currentPage = ko.observable();
   self.currentCheckinEdit = ko.observable();
-  self.currentCheckinBackup = null;
-  
+  self.currentCheckinBackup = null;  
   // Later load this with AJAX
   self.checkinList = ko.observableArray([]);
   
@@ -44,9 +43,39 @@ function CheckinViewModel() {
     self.checkinList(mappedCheckins);
   });
   
+  self.visibleCheckins = ko.computed(function(){
+    return ko.utils.arrayFilter(self.checkinList(), function(checkin) { return !checkin._destroy });
+  });
+  
   // Operations
   // Remove a checkin from the list
-  self.removeCheckin = function(checkin) { self.checkinList.destroy(checkin); };
+  self.removeCheckin = function(checkin) { 
+    // Prompt the user, upon complete the modalSubmitPass event is fired
+    // That finishes up this process
+    $('#modal-password-password').val('');
+    $('#modal-password').data('checkin', checkin);    
+    $('#modal-password').modal('show');
+  };
+  self.removeCheckinFinish = function (btn) {
+    pass = CryptoJS.SHA512(CryptoJS.SHA512($('#modal-password-password').val())).toString();
+    
+    // Get the checkin data stored in the modal
+    var checkin = $('#modal-password').data('checkin');
+    var data = ko.toJS(checkin);
+    data.password = pass;
+
+    // Post the delete
+    $.post('api/delete', {data: JSON.stringify(data)}, function(result){
+      if(result.error){
+        // there was an error!
+        niceAlert(result.error);
+      }
+      else {
+        // Success
+        self.checkinList.destroy(checkin);  
+      }
+    }, 'json');   
+  }
   
   // Begin edit of Checkin (dropdown appears)
   self.editCheckin = function(checkin) {
@@ -91,7 +120,7 @@ function CheckinViewModel() {
     $.post('api/update', {data: JSON.stringify(data)}, function(result){
       if(result.error){
         // there was an error!
-        alert(result.error);
+        niceAlert(result.error);
       }
       else {
         // Success
@@ -99,9 +128,6 @@ function CheckinViewModel() {
         self.currentCheckinBackup = null; 
       }
     }, 'json');
-    
-    
-    return false;
   };
   
   // Behaviours    
@@ -122,6 +148,18 @@ function CheckinViewModel() {
           return (false);
       };
   }).run();
+  
+  // Modal setup (init)
+  $('#modal-password-password').keyup(function(e){
+    if(e.which == 13) //ENTER
+      $('#modal-password-submit').click();
+  });  
+  $('#modal-password').on('shown', function(){
+    $('#modal-password-password').focus();
+  });  
+  $('#modal-blank').on('shown', function(){
+    $('#modal-blank-ok').focus();
+  }); 
 }
 
 // Initializes Date/Time pickers
@@ -186,6 +224,11 @@ ko.bindingHandlers.enableEditSaveValidate = {
         el.attr('disabled', 'disabled');
     });   
   }
+}
+
+function niceAlert(msg) {
+  $('#modal-blank-title').text(msg);   
+  $('#modal-blank').modal('show');  
 }
 
 // Bind the VM

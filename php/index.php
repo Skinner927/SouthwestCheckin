@@ -16,8 +16,8 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-require 'api.php';
-require 'flight/Flight.php';
+require_once 'api.php';
+require_once 'flight/Flight.php';
 
 // This is the only user route for this single page app
 Flight::route('/', function(){
@@ -34,6 +34,12 @@ Flight::route('GET /api/list(/@id:[0-9]+)', function($id){
 Flight::route('POST /api/update', function(){
   noCache();
   echo json_encode(Checkin::update(Flight::request()));
+});
+
+// Handles an update checkin request
+Flight::route('POST /api/delete', function(){
+  noCache();
+  echo json_encode(Checkin::delete(Flight::request()));
 });
 
 
