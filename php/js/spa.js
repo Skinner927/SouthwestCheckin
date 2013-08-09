@@ -50,9 +50,8 @@ function CheckinViewModel() {
     
     
     //$('tr#'+id).fadeTo(500, 0.5);
-  };
-  
-  self.Temp = function(){ self.currentCheckinEdit(null); };
+  };  
+  self.stopEdit = function(){ self.currentCheckinEdit(null); };
   
   // Behaviours    
   self.goToPage = function(page) { location.hash = page };
@@ -71,12 +70,13 @@ function CheckinViewModel() {
 
 // Initializes Date/Time pickers
 ko.bindingHandlers.dateTimePicker = {
-  init: function(element) {
+  init: function(element, valueAccessor, allBindingsAccessor) {
+    // Init the Date/Time picker
     $(element).datetimepicker({      
       language: 'en',
       pick12HourFormat: true, 
       pickSeconds: false
-    });
+    });  
   }
 }
 
@@ -92,6 +92,10 @@ ko.bindingHandlers.hideRow = {
       el.find('button').attr("disabled", "disabled");
       el.fadeTo(200, 0.3);
       
+      // Show the edit pane
+      el.siblings("tr[editfor='" + el.attr('id') + "']").show(function(){
+        $(this).find('div').slideDown("slow");
+      });
       
       console.log('hide: ', element);
     }
@@ -105,6 +109,9 @@ ko.bindingHandlers.hideRow = {
         el.fadeTo(200, 1.0, function(){
           el.find("button").removeAttr('disabled');
         });
+        
+        // Hide the edit pane
+        el.siblings("div[editfor='" + el.attr('id') + "']").slideUp(500);
       
         console.log('show: ', element);
       }

@@ -32,6 +32,9 @@ require_once('config.php');
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
+      .noborderTable th, .noborderTable td {
+        border-top: 0px solid white;
+      }
     </style>
   </head>
   <body>
@@ -60,7 +63,7 @@ require_once('config.php');
       <div data-bind="visible: $root.currentPage() == 'List'">
         <h2>Check In Queue</h2>
         <table class="table table-hover" >
-          <thead><tr><th>Name</th><th>Confirmation #</th><th>Flight Date\Time</th><th>&nbsp;</th></tr></thead>
+          <thead><tr><th style="min-width:220px">Name</th><th style="min-width:262px">Confirmation #</th><th style="min-width:247px">Flight Date\Time</th><th>&nbsp;</th></tr></thead>
           
           <tbody data-bind="foreach: checkinList()">
             
@@ -73,36 +76,42 @@ require_once('config.php');
                 <button class="btn btn-danger" data-bind="click: $parent.removeCheckin"><i class="icon-remove icon-white"></i></button>
               </td>
             </tr>
-            <tr>
-              <td>               
-                  <input type="text" data-bind="value: fname" placeholder="First Name" /><br/>
-                  <input type="text" data-bind="value: lname" placeholder="Last Name" />                
-              </td>
-              <td>
-                <input type="text" data-bind="value: confirmation" placeholder="Confirmation #" /><br/>
-                <div class="control-group error">
-                  <input type="password" name="password" placeholder="Password" />
-                  <span class="help-block">Use the same password as when created.</span>
+            <!-- Edit block -->
+            <tr data-bind="attr: {editfor: $index}" style="display:none">
+              <td colspan="4">
+                <div style="display:none">
+                  <table border="0" class="noborderTable">
+                    <tr>
+                      <td>               
+                          <input type="text" data-bind="value: fname" placeholder="First Name" /><br/>
+                          <input type="text" data-bind="value: lname" placeholder="Last Name" />                
+                      </td>
+                      <td>
+                        <input type="text" data-bind="value: confirmation" class="input-small" placeholder="Confirmation #" /><br/>
+                        <div class="control-group error">
+                          <input type="password" name="password" placeholder="Password" />
+                          <span class="help-block">Use the same password as when created.</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-append date" data-bind="dateTimePicker: true">
+                          <input data-format="MM/dd/yyyy HH:mm PP" type="text" data-bind="value: datetime" value=""></input>
+                          <span class="add-on">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                          </span>
+                        </div>
+                        <div style="margin-top: 10px;">
+                          <button class="btn btn-success" style="margin-right: 5px"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Cancel</button>
+                        </div>
+                      </td>
+                      <td></td>
+                    </tr>
+                  </table>
                 </div>
               </td>
-              <td>
-                <div class="input-append date" data-bind="dateTimePicker: true">
-                  <input data-format="MM/dd/yyyy HH:mm PP" type="text" data-bind="value: datetime"></input>
-                  <span class="add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                  </span>
-                </div>
-                <div style="margin-top: 10px;">
-                  <button class="btn btn-success" style="margin-right: 5px"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger"><i class="icon-remove-sign icon-white"></i> Cancel</button>
-                </div>
-              </td>
-              <td></td>
             </tr>
-            
           </tbody> 
         </table>
-        <!-- temp button -->
-        <button data-bind="click: $root.Temp">RESET</button>
       </div>
       <!-- /List View -->
       
