@@ -32,8 +32,27 @@ require_once('config.php');
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
-      .noborderTable th, .noborderTable td {
-        border-top: 0px solid white;
+
+      .rowLikeTable {
+        border: 1px solid #DDDDDD;
+        border-bottom-width: 0px;
+        padding: 8px;
+        height: 30px;
+      }
+      
+      .rowLikeTable:hover {
+        background-color: #F5F5F5;
+      }
+      
+      .editBlock {
+        border-top: 1px solid black;
+        margin-bottom: 8px;
+        padding: 8px 8px;
+        background-color: #DDDDDD;
+        border-radius: 0px 0px 7px 7px; 
+        -moz-border-radius: 0px 0px 7px 7px; 
+        -webkit-border-radius: 0px 0px 7px 7px; 
+        display: none;
       }
     </style>
   </head>
@@ -62,56 +81,49 @@ require_once('config.php');
       <!-- List View -->
       <div data-bind="visible: $root.currentPage() == 'List'">
         <h2>Check In Queue</h2>
-        <table class="table table-hover" >
-          <thead><tr><th style="min-width:220px">Name</th><th style="min-width:262px">Confirmation #</th><th style="min-width:247px">Flight Date\Time</th><th>&nbsp;</th></tr></thead>
-          
-          <tbody data-bind="foreach: checkinList()">
-            
-            <tr data-bind="attr: {id: $index}, hideRow: $data == $root.currentCheckinEdit()">
-              <td data-bind="text: fname() + ' ' + lname()"></td>
-              <td data-bind="text: confirmation"></td>
-              <td data-bind="text: datetime"></td>
-              <td>
-                <button class="btn btn-success" data-bind="click: $parent.editCheckin"><i class="icon-pencil icon-white"></i></button>
-                <button class="btn btn-danger" data-bind="click: $parent.removeCheckin"><i class="icon-remove icon-white"></i></button>
-              </td>
-            </tr>
-            <!-- Edit block -->
-            <tr data-bind="attr: {editfor: $index}" style="display:none">
-              <td colspan="4">
-                <div style="display:none">
-                  <table border="0" class="noborderTable">
-                    <tr>
-                      <td>               
-                          <input type="text" data-bind="value: fname" placeholder="First Name" /><br/>
-                          <input type="text" data-bind="value: lname" placeholder="Last Name" />                
-                      </td>
-                      <td>
-                        <input type="text" data-bind="value: confirmation" class="input-small" placeholder="Confirmation #" /><br/>
-                        <div class="control-group error">
-                          <input type="password" name="password" placeholder="Password" />
-                          <span class="help-block">Use the same password as when created.</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-append date" data-bind="dateTimePicker: true">
-                          <input data-format="MM/dd/yyyy HH:mm PP" type="text" data-bind="value: datetime" value=""></input>
-                          <span class="add-on">
-                            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                          </span>
-                        </div>
-                        <div style="margin-top: 10px;">
-                          <button class="btn btn-success" style="margin-right: 5px"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Cancel</button>
-                        </div>
-                      </td>
-                      <td></td>
-                    </tr>
-                  </table>
-                </div>
-              </td>
-            </tr>
-          </tbody> 
-        </table>
+        <div class="row-fluid">
+          <div class="span3"><h5>Name</h5></div>
+          <div class="span3"><h5>Confirmation #</h5></div>
+          <div class="span3"><h5>Flight Date\Time</h5></div>
+          <div class="span3"><h5>&nbsp;</h5></div>
+        </div>
+        <!-- ko foreach: checkinList() -->
+        <div class="row-fluid rowLikeTable" data-bind="attr: {id: $index()}, hideRow: $data == $root.currentCheckinEdit(), style: { borderBottomWidth: $index() == ($root.checkinList().length - 1)? '1px' : '0px'}">
+          <div class="span3" data-bind="text: fname() + ' ' + lname()"></div>
+          <div class="span3" data-bind="text: confirmation"></div>
+          <div class="span3" data-bind="text: datetime"></div>
+          <div class="span3">
+            <button class="btn btn-success" data-bind="click: $parent.editCheckin"><i class="icon-pencil icon-white"></i></button>
+            <button class="btn btn-danger" data-bind="click: $parent.removeCheckin"><i class="icon-remove icon-white"></i></button>
+          </div>
+        </div>
+        <!-- Edit Block -->
+        <div class="row-fluid editBlock" data-bind="attr: {editfor: $index()}">
+          <div class="span3">
+            <input type="text" data-bind="value: fname" placeholder="First Name" /><br/>
+            <input type="text" data-bind="value: lname" placeholder="Last Name" />
+          </div>
+          <div class="span3">
+            <input type="text" data-bind="value: confirmation" class="input-small" placeholder="Confirmation #" /><br/>
+            <div class="control-group error">
+              <input type="password" name="password" placeholder="Password" />
+              <span class="help-block">Use the same password as when created.</span>
+            </div>
+          </div>
+          <div class="span3">
+            <div class="input-append date" data-bind="dateTimePicker: true">
+              <input data-format="MM/dd/yyyy HH:mm PP" type="text" data-bind="value: datetime" value=""></input>
+              <span class="add-on">
+                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+              </span>
+            </div>
+            <div style="margin-top: 10px;">
+              <button class="btn btn-success" style="margin-right: 5px"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Cancel</button>
+            </div>
+          </div>
+          <div class="span3"></div>
+        </div>
+        <!-- /ko -->
       </div>
       <!-- /List View -->
       

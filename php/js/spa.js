@@ -25,11 +25,14 @@ function Checkin(data) {
 }
 
 function CheckinViewModel() {
+  $(document).ready(function(){$('.rowLikeTable').last().css('border-bottom-width', '1px');});
+  
   // Data
   var self = this;
   self.pages = ['List', 'Reports']; // Defined pages
   self.currentPage = ko.observable();
   self.currentCheckinEdit = ko.observable();
+  self.currentCheckinBackup = null;
   
   // Later load this with AJAX
   self.checkinList = ko.observableArray([]);
@@ -40,18 +43,32 @@ function CheckinViewModel() {
   });
   
   // Operations
+  // Remove a checkin from the list
   self.removeCheckin = function(checkin) { self.checkinList.destroy(checkin); };
+  
+  // Begin edit of Checkin (dropdown appears)
   self.editCheckin = function(checkin) {
     // Set element to current edit
     self.currentCheckinEdit(checkin);
+    // Backup
+    self.currentCheckinBackup = ko.toJS(checkin);
+    // Gotta change the time back to unix
+    self.currentCheckinBackup.datetime = moment(self.currentCheckinBackup.datetime).unix();
     
-    var id = self.checkinList.indexOf(checkin);
-    
-    
-    
-    //$('tr#'+id).fadeTo(500, 0.5);
+    var id = self.checkinList.indexOf(checkin);   
+ 
   };  
-  self.stopEdit = function(){ self.currentCheckinEdit(null); };
+  
+  // Cancel and edit, undo the changes
+  self.stopEdit = function(){ 
+    console.log(self.currentCheckinBackup);
+    // We need to resore the old values first
+    self.checkinList.replace(self.currentCheckinEdit(), new Checkin(self.currentCheckinBackup));
+    
+    // Then hide the window and cleanup
+    self.currentCheckinEdit(null); 
+    self.currentCheckinBackup = null; 
+  };
   
   // Behaviours    
   self.goToPage = function(page) { location.hash = page };
@@ -93,11 +110,7 @@ ko.bindingHandlers.hideRow = {
       el.fadeTo(200, 0.3);
       
       // Show the edit pane
-      el.siblings("tr[editfor='" + el.attr('id') + "']").show(function(){
-        $(this).find('div').slideDown("slow");
-      });
-      
-      console.log('hide: ', element);
+      el.siblings("div[editfor='" + el.attr('id') + "']").slideDown(500);      
     }
     else {
       if($(element).data('gone') === true) {
@@ -111,9 +124,7 @@ ko.bindingHandlers.hideRow = {
         });
         
         // Hide the edit pane
-        el.siblings("div[editfor='" + el.attr('id') + "']").slideUp(500);
-      
-        console.log('show: ', element);
+        el.siblings("div[editfor='" + el.attr('id') + "']").slideUp(500);      
       }
     }
   }
