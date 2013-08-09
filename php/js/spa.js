@@ -38,6 +38,7 @@ function CheckinViewModel() {
   // Later load this with AJAX
   self.checkinList = ko.observableArray([]);
   
+  // Load the list of checkins
   $.getJSON('api/list', function(data){
     var mappedCheckins = $.map(data, function(item) { return new Checkin(item); });
     self.checkinList(mappedCheckins);
@@ -169,7 +170,7 @@ ko.bindingHandlers.hideRow = {
 }
 
 // Enables or disables the button upon validation
-ko.bindingHandlers.enableEditSave = {
+ko.bindingHandlers.enableEditSaveValidate = {
   init: function(element) {
     var el = $(element);
     var pass = el.parents('form').eq(0).find("input[name='password']");

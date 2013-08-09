@@ -119,7 +119,7 @@ require('config.php');
                 </span>
               </div>
               <div style="margin-top: 10px;">
-                <button class="btn btn-success" style="margin-right: 5px" data-bind="enableEditSave: true"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Cancel</button>
+                <button class="btn btn-success" style="margin-right: 5px" data-bind="enableEditSaveValidate: true"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Cancel</button>
               </div>
             </div>
             <div class="span3"></div>

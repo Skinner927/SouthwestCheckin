@@ -26,14 +26,21 @@ Flight::route('/', function(){
 
 // Returns Checkin rows
 Flight::route('GET /api/list(/@id:[0-9]+)', function($id){
+  noCache();
   echo json_encode(Checkin::get($id));
 });
 
 // Handles an update checkin request
 Flight::route('POST /api/update', function(){
+  noCache();
   echo json_encode(Checkin::update(Flight::request()));
 });
 
 
 Flight::start();
+
+function noCache() {
+  header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+  header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+}
 ?>

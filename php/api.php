@@ -119,7 +119,7 @@ class Checkin {
     
     // Valid pass?
     if($clientPass != $row->password) {
-      return array('error' => "Invalid Password");
+      return array('error' => "Invalid Password!");
     }
     
     // Fix the datetime to be in proper format
