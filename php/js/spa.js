@@ -17,7 +17,7 @@
 */
 
 // Represents a checkin row
-function Checkin(data) {
+function Checkin(data) { console.log('newCheckin', data);
   this.fname = ko.observable(data.fname);
   this.lname = ko.observable(data.lname);
   this.confirmation = ko.observable(data.confirmation);
@@ -60,12 +60,17 @@ function CheckinViewModel() {
   };  
   
   // Cancel and edit, undo the changes
-  self.stopEdit = function(){ 
-    console.log(self.currentCheckinBackup);
+  self.stopEdit = function(){
+  
     // We need to resore the old values first
-    self.checkinList.replace(self.currentCheckinEdit(), new Checkin(self.currentCheckinBackup));
+    var newCheckin = new Checkin(self.currentCheckinBackup);
+    self.checkinList.replace(self.currentCheckinEdit(), newCheckin);
     
-    // Then hide the window and cleanup
+    // Now get the index of the new checkin so we can open and close it before the user notices
+    var index = self.checkinList.indexOf(newCheckin);
+    $("div[editfor='" + index +"']").show().slideUp(500);
+        
+    // Then hide the window (if there is one) and cleanup
     self.currentCheckinEdit(null); 
     self.currentCheckinBackup = null; 
   };
