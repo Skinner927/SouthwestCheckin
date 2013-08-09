@@ -110,9 +110,9 @@ require('config.php');
             </div>
             <div class="span3">
               <input type="text" data-bind="value: confirmation" class="input-small" placeholder="Confirmation #" /><br/>
-              <div class="control-group error" style="padding-bottom: 1em;">
+              <div class="control-group error">
                 <input type="password" name="password" placeholder="Password" />
-                <span class="help-block" style="position:absolute; z-index:50;">Use the same password as when created. Required to save changes.</span>
+                <span class="help-block" style="white-space: nowrap;">Use the same password as when created. Required to save changes.</span>
               </div>
             </div>
             <div class="span3">
