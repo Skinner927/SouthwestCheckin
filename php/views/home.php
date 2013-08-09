@@ -49,10 +49,11 @@ require('config.php');
       }
       
       .editBlock {
+        border: 1px solid #E3E3E3;
         border-top: 1px solid black;
         margin-bottom: 8px;
         padding: 8px 8px;
-        background-color: #DDDDDD;
+        background-color: #F5F5F5;
         border-radius: 0px 0px 7px 7px; 
         -moz-border-radius: 0px 0px 7px 7px; 
         -webkit-border-radius: 0px 0px 7px 7px; 
@@ -86,7 +87,7 @@ require('config.php');
       <div data-bind="visible: $root.currentPage() == 'List'">
         <h2>Add Flight</h2>
         <div class="well well-small">
-          <form id="newCheckinForm">
+          <form id="newCheckinForm" style="margin:10px 0 0 0;">
           <div class="container">
             <div class="span3">
               <input type="text" name="fname" placeholder="First Name" /><br/>
@@ -98,7 +99,7 @@ require('config.php');
             </div>
             <div class="span3">
               <div class="input-append date" data-bind="dateTimePicker: true">
-                <input data-format="MM/dd/yyyy HH:mm PP" type="text" name="datetime" placeholder="Flight Date" />
+                <input data-format="MM/dd/yyyy HH:mm PP" type="text" name="datetime" placeholder="Flight Date\Time" />
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
                 </span>
