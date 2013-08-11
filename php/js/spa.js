@@ -23,7 +23,6 @@ function Checkin(data) {
   this.lname = ko.observable(data.lname);
   this.confirmation = ko.observable(data.confirmation);
   this.datetime = ko.observable(moment.unix(data.datetime).format('MM/DD/YYYY hh:mm A'));
-  this.email = ko.observable(data.email);
 }
 
 function CheckinViewModel() {
@@ -53,7 +52,7 @@ function CheckinViewModel() {
   };
   self.removeCheckinFinish = function (btn) {
     pass = CryptoJS.SHA512(CryptoJS.SHA512($('#modal-password-password').val())).toString();
-    
+    console.log('pass: ', $('#modal-password-password').val());
     // Get the checkin data stored in the modal
     var checkin = $('#modal-password').data('checkin');
     var data = ko.toJS(checkin);
@@ -128,12 +127,14 @@ function CheckinViewModel() {
   self.addNewCheckin = function() {
     var data = $('#newCheckinForm').serializeObject();
     
+    data.password = CryptoJS.SHA512(CryptoJS.SHA512(data.password)).toString();
+    
     $.post('api/new', {data: data}, function(result) {
       if(result.error){
         niceAlert(result.error);
       } else {
         // Clear the form
-        //$('#newCheckinForm').find('input').val('');
+        $('#newCheckinForm').find('input').val('');
         // Refresh
         self.loadList();
         // Show success        

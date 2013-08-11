@@ -153,9 +153,9 @@ class Checkin {
   // Gets the checking with the specified id or all if no id
   public static function get($id = 0) {    
     if($id == null || $id == 0)
-      return DB::fetch('SELECT id, lname, fname, confirmation, datetime, email FROM "'.TABLECHECKIN.'"');
+      return DB::fetch('SELECT id, lname, fname, confirmation, datetime FROM "'.TABLECHECKIN.'"');
     else
-      return DB::row('SELECT id, lname, fname, confirmation, datetime, email FROM "'.TABLECHECKIN.'" WHERE id = ?', array($id));    
+      return DB::row('SELECT id, lname, fname, confirmation, datetime FROM "'.TABLECHECKIN.'" WHERE id = ?', array($id));    
   }
   
   // Updates a Checkin row
@@ -218,14 +218,14 @@ class Checkin {
     if($row === false) {
       return array('error' => "Invalid ID, Couldn't find row");
     }
-    
+
     // Password is double sha512 hashed from client, add the salt and hash again to compare
     $clientPass = trim($data->password) . $row->salt;
     $clientPass = hash('sha512', $clientPass);
     
     // Valid pass?
     if($clientPass != $row->password) {
-      return array('error' => "Invalid Password!");
+      return array('error' => "Invalid Password! ");
     }
     
     // We got here? Delete it!    
