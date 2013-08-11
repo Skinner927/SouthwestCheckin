@@ -52,7 +52,6 @@ if (isset($defaultFill) && $defaultFill === true) {
     success NUMERIC,
     password TEXT,
     salt TEXT,
-    hash TEXT,
     email TEXT
     )');
   
@@ -93,18 +92,82 @@ if (isset($defaultFill) && $defaultFill === true) {
 
 // Handles checkin post/get/push methods
 class Checkin {
+
+  // Validates a data object from the user.
+  // $required is an array of properties to check for
+  // Returns true if success else an array of errors
+  public static function validate($data, $required) {
+    
+    $dataArray = (array)$data;
+
+    foreach($required as $requirement) {
+      
+      // simple sanity check
+      if(!property_exists($data, $requirement) || empty($dataArray[$requirement])) {
+        // Human readable
+        if($requirement == 'fname')
+          $requirement = 'first name';
+        else if ($requirement == 'lname')
+          $requirement = 'last name';
+        else if ($requirement == 'confirmation')
+          $requirement .= ' number';
+        else if ($requirement == 'datetime') {
+          $requirement = 'Date\Time';
+        } 
+          
+        return array('error' => ucfirst($requirement).' cannot be empty');
+      }
+      
+      // Special cases
+      switch ($requirement) {
+        case 'id':
+          if(!preg_match('/^\d+$/', $dataArray['id']))
+            return array('error' => 'Invalid ID');
+        break;
+        case 'email' :
+          if(filter_var($dataArray['email'], FILTER_VALIDATE_EMAIL) === false)
+            return array('error' => 'Invalid email address');
+        break;
+        case 'confirmation' :
+          if(!preg_match('/^\w{6}$/', $dataArray['confirmation']))
+            return array('error' => 'Invalid confirmation number');
+        break;
+        case 'datetime' :
+          if(!preg_match('/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2} (AM|PM)$/', $dataArray['datetime']))
+            return array('error' => 'Invalid Date\Time');
+        break;        
+      }      
+    }
+    
+    // If we get to here, it's all good
+    return true;
+  }
+  
+  // converts the html style date/time to unix epoch
+  private static function convertDateTimeToUnix($datetime) {
+    
+    $d = date_create_from_format('m/d/Y h:i A', $datetime);
+    return $d->format('U');    
+  }
+
   // Gets the checking with the specified id or all if no id
   public static function get($id = 0) {    
     if($id == null || $id == 0)
-      return DB::fetch('SELECT id, lname, fname, confirmation, datetime FROM "'.TABLECHECKIN.'"');
+      return DB::fetch('SELECT id, lname, fname, confirmation, datetime, email FROM "'.TABLECHECKIN.'"');
     else
-      return DB::row('SELECT id, lname, fname, confirmation, datetime FROM "'.TABLECHECKIN.'" WHERE id = ?', array($id));    
+      return DB::row('SELECT id, lname, fname, confirmation, datetime, email FROM "'.TABLECHECKIN.'" WHERE id = ?', array($id));    
   }
   
   // Updates a Checkin row
   public static function update($request) {
     // Get our post data
     $data = json_decode($request->data['data']);    
+    
+    // Validate
+    $result = self::validate($data, array('id', 'fname', 'lname', 'confirmation', 'password', 'datetime'));
+    if($result !== true) {
+      return $result;
+    }
     
     // Grab the row's password and salt
     $row = DB::row('SELECT password, salt FROM "'.TABLECHECKIN.'" WHERE id = ?', array($data->id));
@@ -124,14 +187,14 @@ class Checkin {
     }
     
     // Fix the datetime to be in proper format
-    $d = date_create_from_format('m/d/Y h:i A', $data->datetime);
-    $data->datetime = $d->format('U');
+    $data->datetime = self::convertDateTimeToUnix($data->datetime);
     
     // Remove the password property because we don't want to update that
     unset($data->password);
     
     // We got here? Update it!
-    DB::update(TABLECHECKIN, (array)$data, $data->id);
+    if(DB::update(TABLECHECKIN, (array)$data, $data->id) < 1)
+      return array('error' => 'An unknown error occurred. Please try again.');
     
     // Nothing's wrong!
     return array();
@@ -141,6 +204,12 @@ class Checkin {
   public static function delete($request) {
     // Get our post data
     $data = json_decode($request->data['data']);    
+    
+    // Validate
+    $result = self::validate($data, array('id', 'password'));
+    if($result !== true) {
+      return $result;
+    }
     
     // Grab the row's password and salt
     $row = DB::row('SELECT password, salt FROM "'.TABLECHECKIN.'" WHERE id = ?', array($data->id));
@@ -159,11 +228,43 @@ class Checkin {
       return array('error' => "Invalid Password!");
     }
     
-    // We got here? Delete it!
-    DB::query('DELETE FROM "'.TABLECHECKIN.'" WHERE id = ?', array($data->id));
+    // We got here? Delete it!    
+    if(DB::query('DELETE FROM "'.TABLECHECKIN.'" WHERE id = ?', array($data->id)) === false)
+      return array('error' => 'An unknown error occurred. Please try again.');
     
     // Nothing's wrong!
     return array();
+  }
+  
+  // Creates a new Checkin row
+  public static function create($request) {
+    // Get the post data
+    $data = json_decode(json_encode($request->data['data']));
+    
+    // Validate
+    $result = self::validate($data, array('fname', 'lname', 'email', 'confirmation', 'password', 'datetime'));
+    if($result !== true) {
+      return $result;
+    }
+    
+    // Create password salt
+    $data->salt = openssl_random_pseudo_bytes(8);
+    $data->password = hash('sha512', $data->password.$data->salt);
+    
+    
+    // Fix the time
+    $data->datetime = self::convertDateTimeToUnix($data->datetime);
+    
+    $data->created = time();
+    
+    $data->success = 0;
+    
+    // Stick it in the DB    
+    if(DB::insert(TABLECHECKIN, (array)$data) < 1)
+      return array('error' => 'An unknown error occurred. Please try again.');
+    
+    // Nothing's wrong
+    return array();    
   }
 }
 ?>

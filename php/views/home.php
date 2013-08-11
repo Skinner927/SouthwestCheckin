@@ -22,7 +22,8 @@ require('config.php');
 <html>
   <head>
     <title><?php echo $site['title'];?></title>
-    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -35,9 +36,12 @@ require('config.php');
 
       .rowLikeTable {
         border: 1px solid #DDDDDD;
-        border-bottom-width: 0px;
-        padding: 8px;
-        height: 30px;
+        border-bottom-width: 0px;  
+        margin: 0px -1px;
+      }
+      
+      .rowLikeTable div {
+        margin: 8px !important;
       }
       
       .lastRow {
@@ -51,13 +55,16 @@ require('config.php');
       .editBlock {
         border: 1px solid #E3E3E3;
         border-top: 1px solid black;
-        margin-bottom: 8px;
-        padding: 8px 8px;
+        margin: 8px -1px 8px -1px;
         background-color: #F5F5F5;
         border-radius: 0px 0px 7px 7px; 
         -moz-border-radius: 0px 0px 7px 7px; 
         -webkit-border-radius: 0px 0px 7px 7px; 
         display: none;
+      }
+      
+      .editBlock>form>div {
+        margin: 8px !important;
       }
     </style>
   </head>
@@ -86,28 +93,32 @@ require('config.php');
       <!-- List View -->
       <div data-bind="visible: $root.currentPage() == 'List'">
         <h2>Add Flight</h2>
+        <div id="addSuccessAlert" class="alert alert-success">
+          <strong>Flight Added!</strong>
+          </div>
         <div class="well well-small">
-          <form id="newCheckinForm" style="margin:10px 0 0 0;">
-          <div class="container">
-            <div class="span3">
-              <input type="text" name="fname" placeholder="First Name" /><br/>
-              <input type="text" name="lname" placeholder="Last Name" />
-            </div>
-            <div class="span3">
-              <input type="text" name="confirmation" placeholder="Confirmation #" /><br/>
-              <input type="password" name="password" placeholder="New Password" />  
-            </div>
-            <div class="span3">
-              <div class="input-append date" data-bind="dateTimePicker: true">
-                <input data-format="MM/dd/yyyy HH:mm PP" type="text" name="datetime" placeholder="Flight Date\Time" />
-                <span class="add-on">
-                  <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                </span>
+          <form id="newCheckinForm" style="margin:10px 0 0 0;" data-bind="submit: $root.addNewCheckin">
+            <div class="container">
+              <div class="span3">
+                <input type="text" autocomplete="off" name="fname" placeholder="First Name" /><br/>
+                <input type="text" autocomplete="off" name="lname" placeholder="Last Name" />
               </div>
-              <div style="margin-top: 10px;">
-                <button class="btn btn-success" type="submit" style="margin-right: 5px"><i class="icon-plus icon-white"></i> Add</button>
+              <div class="span3">
+                <input type="text" autocomplete="off" name="confirmation" placeholder="Confirmation #" /><br/>
+                <input type="password" autocomplete="off" name="password" placeholder="New Password" />  
               </div>
-            </div>
+              <div class="span3">
+                <div class="input-append date" data-bind="dateTimePicker: true">
+                  <input data-format="MM/dd/yyyy HH:mm PP" type="text" name="datetime" value="" placeholder="Flight Date\Time" />
+                  <span class="add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                  </span>
+                </div>
+                <input style="margin-top:5px;" type="text" autocomplete="off" name="email" placeholder="Email" />
+              </div>
+              <div class="span2">
+                <button style="margin-top:40px;" class="btn btn-success" type="submit" style="margin-right: 5px"><i class="icon-plus icon-white"></i> Add</button>
+              </div>
             </div>
           </form>
         </div>
@@ -123,7 +134,7 @@ require('config.php');
           <div class="span3" data-bind="text: fname() + ' ' + lname()"></div>
           <div class="span3" data-bind="text: confirmation"></div>
           <div class="span3" data-bind="text: datetime"></div>
-          <div class="span3">
+          <div class="span2">
             <button class="btn btn-success" data-bind="click: $parent.editCheckin"><i class="icon-pencil icon-white"></i></button>
             <button class="btn btn-danger" data-bind="click: $parent.removeCheckin"><i class="icon-remove icon-white"></i></button>
           </div>
@@ -153,7 +164,6 @@ require('config.php');
                 <button class="btn btn-success" style="margin-right: 5px" data-bind="enableEditSaveValidate: true"><i class="icon-check icon-white"></i> Save</button><button class="btn btn-danger" data-bind="click: $root.stopEdit"><i class="icon-remove-sign icon-white"></i> Close</button>
               </div>
             </div>
-            <div class="span3"></div>
           </form>
         </div>
         <!-- /ko -->

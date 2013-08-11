@@ -23,6 +23,7 @@ function Checkin(data) {
   this.lname = ko.observable(data.lname);
   this.confirmation = ko.observable(data.confirmation);
   this.datetime = ko.observable(moment.unix(data.datetime).format('MM/DD/YYYY hh:mm A'));
+  this.email = ko.observable(data.email);
 }
 
 function CheckinViewModel() {
@@ -36,12 +37,6 @@ function CheckinViewModel() {
   self.currentCheckinBackup = null;  
   // Later load this with AJAX
   self.checkinList = ko.observableArray([]);
-  
-  // Load the list of checkins
-  $.getJSON('api/list', function(data){
-    var mappedCheckins = $.map(data, function(item) { return new Checkin(item); });
-    self.checkinList(mappedCheckins);
-  });
   
   self.visibleCheckins = ko.computed(function(){
     return ko.utils.arrayFilter(self.checkinList(), function(checkin) { return !checkin._destroy });
@@ -121,14 +116,44 @@ function CheckinViewModel() {
       if(result.error){
         // there was an error!
         niceAlert(result.error);
-      }
-      else {
+      } else {
         // Success
         self.currentCheckinEdit(null); 
         self.currentCheckinBackup = null; 
       }
     }, 'json');
   };
+  
+  // Add a new checkin
+  self.addNewCheckin = function() {
+    var data = $('#newCheckinForm').serializeObject();
+    
+    $.post('api/new', {data: data}, function(result) {
+      if(result.error){
+        niceAlert(result.error);
+      } else {
+        // Clear the form
+        //$('#newCheckinForm').find('input').val('');
+        // Refresh
+        self.loadList();
+        // Show success        
+        $('#addSuccessAlert').fadeIn(500).delay(5000).fadeOut(1000);       
+      }
+    }, 'json')
+    .error(function(){ niceAlert('An unknown error occurred. Please try again.');});
+  }
+  
+  // Load the list of checkins
+  self.loadList = function() {    
+    $.getJSON('api/list', function(data){
+      var mappedCheckins = $.map(data, function(item) { return new Checkin(item); });
+      self.checkinList(mappedCheckins);
+    });
+  }
+  // init
+  self.loadList();
+  moment().local();
+  $('#addSuccessAlert').hide();
   
   // Behaviours    
   self.goToPage = function(page) { location.hash = page };
@@ -149,7 +174,7 @@ function CheckinViewModel() {
       };
   }).run();
   
-  // Modal setup (init)
+  // Modals setup (init)
   $('#modal-password-password').keyup(function(e){
     if(e.which == 13) //ENTER
       $('#modal-password-submit').click();
@@ -230,6 +255,25 @@ function niceAlert(msg) {
   $('#modal-blank-title').text(msg);   
   $('#modal-blank').modal('show');  
 }
+
+// Makes a form serialize to a json object
+// http://stackoverflow.com/questions/1184624/convert-form-data-to-js-object-with-jquery
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
 
 // Bind the VM
 ko.applyBindings(new CheckinViewModel());

@@ -42,6 +42,12 @@ Flight::route('POST /api/delete', function(){
   echo json_encode(Checkin::delete(Flight::request()));
 });
 
+// Handles adding a new checkin
+Flight::route('POST /api/new', function(){
+  noCache();
+  echo json_encode(Checkin::create(Flight::request()));
+});
+
 
 Flight::start();
 
