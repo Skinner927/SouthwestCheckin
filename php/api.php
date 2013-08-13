@@ -195,6 +195,8 @@ class Checkin {
     // If there isn't a new confirmation number, don't change it
     if(strpos($data->confirmation, '*') !== false)
       unset($data->confirmation);
+    else
+      $data->confirmation = strtoupper($data->confirmation);
     
     // We got here? Update it!
     if(DB::update(TABLECHECKIN, (array)$data, $data->id) < 1)
@@ -255,6 +257,8 @@ class Checkin {
     $data->salt = bin2hex(openssl_random_pseudo_bytes(8));
     $data->password = hash('sha512', $data->password.$data->salt);
     
+    // UCase the Confirmation
+    $data->confirmation = strtoupper($data->confirmation);
     
     // Fix the time
     $data->datetime = self::convertDateTimeToUnix($data->datetime);

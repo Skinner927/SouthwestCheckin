@@ -41,7 +41,7 @@ require('config.php');
         margin: 0px -1px;
       }
       
-      .rowLikeTable div {
+      .rowLikeTable div, .span3 {
         margin: 8px !important;
       }
       
