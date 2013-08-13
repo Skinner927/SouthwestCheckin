@@ -153,9 +153,9 @@ class Checkin {
   // Gets the checking with the specified id or all if no id
   public static function get($id = 0) {    
     if($id == null || $id == 0)
-      return DB::fetch('SELECT id, lname, fname, confirmation, datetime FROM "'.TABLECHECKIN.'"');
+      return DB::fetch('SELECT id, lname, fname, substr(confirmation, 1, 1) || "****" || substr(confirmation, -1, 1) as confirmation, datetime FROM "'.TABLECHECKIN.'" ORDER BY datetime, lname, fname');
     else
-      return DB::row('SELECT id, lname, fname, confirmation, datetime FROM "'.TABLECHECKIN.'" WHERE id = ?', array($id));    
+      return DB::row('SELECT id, lname, fname, substr(confirmation, 1, 1) || "****" as confirmation, datetime FROM "'.TABLECHECKIN.'" WHERE id = ?', array($id));    
   }
   
   // Updates a Checkin row
@@ -191,6 +191,10 @@ class Checkin {
     
     // Remove the password property because we don't want to update that
     unset($data->password);
+    
+    // If there isn't a new confirmation number, don't change it
+    if(strpos($data->confirmation, '*') !== false)
+      unset($data->confirmation);
     
     // We got here? Update it!
     if(DB::update(TABLECHECKIN, (array)$data, $data->id) < 1)
@@ -248,7 +252,7 @@ class Checkin {
     }
     
     // Create password salt
-    $data->salt = openssl_random_pseudo_bytes(8);
+    $data->salt = bin2hex(openssl_random_pseudo_bytes(8));
     $data->password = hash('sha512', $data->password.$data->salt);
     
     
