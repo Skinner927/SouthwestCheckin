@@ -67,6 +67,27 @@ require('config.php');
       .editBlock>form>div {
         margin: 8px !important;
       }
+      
+      .brand {
+        background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAAB\
+        zenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAMJSU\
+        RBVHjaYvz//z/DQAKAAGJiGGAAEEAD7gCAABpwBwAE0IA7ACCA6OaAoqIibmziAAHESOtcALQ4GkiVALEGE\
+        Av09fX9RJYHCCAWWllcUFAAMrsXiPOgQucnTJjwE10dQABhdUBubm4ikBIF4lNAfHry5MlfSbEcqJ8PSK0C\
+        Ynck4ZnY1AIEEFYH/PnzB5Q2GoCYE8TNzMy8AqRPgBwDddS16dOn/8OmF6gWZPl2ILZCEl4DxLOwqQcIIJx\
+        pIDU1VQdIrQBibSzSn6AOgTtq9uzZL4B6sFl+E4jNgPKfsNkDEEB4E2FiYiIo5U4C4iQiQv4BEP8GYlUkse\
+        dAbD9//vzbuDQBBBBRuSA2NjYSSM0AYj4SksIrIHZcvHjxNXyKAAKI6GwYERGhAo0SYyKUg4LbfsWKFRcIK\
+        QQIIJLKgZCQEHYg1QVK6CC9eJS+XLNmjQQxZgIEEFkFUUBAgB+Qmg/EQniUKW3YsOE+IbMAAoisggiYTQ8C\
+        qbsEHGAOxAQdABBAJDvAxMSEH0jtBGJTAkrNoWkGLwAIIJIcoKSkBLPcHEn4DTR3sKEptyDGTIAAIro2VFR\
+        U5Aeml51AbA5KN1D8EogdgLgCSQyGDYF62AmZCxBAWENAXl4+CEiFgmovJCwOxIJohYzzw4cPrwPVg/K6Ix\
+        D7IsmDLDcA4pP4HAAQQFhDAGjoOqAPlgOxChBbALEGEAsi+e4JENuDLIeqB3L/JwLxY7RQMCcUAgABhDMKH\
+        j16tAlIgeqDcmjBAgN/gdgBKH8bTf1bIBUFyiRoCREvAAggosoBWVlZKVB9DsRiQPzu8ePHwnjUVgGpVij3\
+        HlCtMj6zAQKIqEQINOQZ0KF10GD9gE8tUL4DiHdD1SrJyMiI4lMPEECktAnnAPElIMbrgCdPnoDaCbFA/IK\
+        YaAAIIKIdADQYFPeFhBwAVfsSSMUA8T9C5QFAAJHUKgYavA8YrAuJVLsXqLYNiBXwqQMIIJq2iqWlpUHlDO\
+        vTp0+/41IDEECMA905BQigAe8ZAQTQgDsAIMAAlTtEpH1df7gAAAAASUVORK5CYII=');
+        background-repeat: no-repeat;
+        background-position: center left;
+        padding-left: 31px !important;
+      }
     </style>
   </head>
   <body>
