@@ -1,0 +1,982 @@
+var stations_info   = 
+{
+"CAK":{
+	"code":"CAK",
+	"station_name":"Akron-Canton",
+	"state_federal_unit":"OH",
+	"country_code":"US",
+	"airport_list_name":"Akron-Canton, OH - CAK",
+	"display_name":"Akron-Canton, OH - CAK",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"ALB":{
+	"code":"ALB",
+	"station_name":"Albany",
+	"state_federal_unit":"NY",
+	"country_code":"US",
+	"airport_list_name":"Albany, NY - ALB",
+	"display_name":"Albany, NY - ALB",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"ABQ":{
+	"code":"ABQ",
+	"station_name":"Albuquerque",
+	"state_federal_unit":"NM",
+	"country_code":"US",
+	"airport_list_name":"Albuquerque, NM - ABQ",
+	"display_name":"Albuquerque, NM - ABQ",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"AMA":{
+	"code":"AMA",
+	"station_name":"Amarillo",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"Amarillo, TX - AMA",
+	"display_name":"Amarillo, TX - AMA",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"ATL":{
+	"code":"ATL",
+	"station_name":"Atlanta",
+	"state_federal_unit":"GA",
+	"country_code":"US",
+	"airport_list_name":"Atlanta, GA - ATL",
+	"display_name":"Atlanta, GA - ATL",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"AUS":{
+	"code":"AUS",
+	"station_name":"Austin",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"Austin, TX - AUS",
+	"display_name":"Austin, TX - AUS",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"BWI":{
+	"code":"BWI",
+	"station_name":"Baltimore/Washington",
+	"state_federal_unit":"MD",
+	"country_code":"US",
+	"airport_list_name":"Baltimore/Washington, MD - BWI",
+	"display_name":"Baltimore/Washington, MD - BWI",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"BHM":{
+	"code":"BHM",
+	"station_name":"Birmingham",
+	"state_federal_unit":"AL",
+	"country_code":"US",
+	"airport_list_name":"Birmingham, AL - BHM",
+	"display_name":"Birmingham, AL - BHM",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"BOI":{
+	"code":"BOI",
+	"station_name":"Boise",
+	"state_federal_unit":"ID",
+	"country_code":"US",
+	"airport_list_name":"Boise, ID - BOI",
+	"display_name":"Boise, ID - BOI",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"BOT":{
+	"code":"BOT",
+	"station_name":"Boston Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"Boston Area",
+	"display_name":"Boston Area, - BOT",
+	"children":["BOS","MHT","PVD"],
+	"mkt_carrier_codes":[]
+	},
+"BOS":{
+	"code":"BOS",
+	"station_name":"Boston Logan",
+	"state_federal_unit":"MA",
+	"country_code":"US",
+	"airport_list_name":"Boston Logan, MA - BOS",
+	"display_name":"Boston Logan, MA - BOS",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"BKG":{
+	"code":"BKG",
+	"station_name":"Branson",
+	"state_federal_unit":"MO",
+	"country_code":"US",
+	"airport_list_name":"Branson, MO - BKG",
+	"display_name":"Branson, MO - BKG",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"BUF":{
+	"code":"BUF",
+	"station_name":"Buffalo/Niagara",
+	"state_federal_unit":"NY",
+	"country_code":"US",
+	"airport_list_name":"Buffalo/Niagara, NY - BUF",
+	"display_name":"Buffalo/Niagara, NY - BUF",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"BUR":{
+	"code":"BUR",
+	"station_name":"Burbank",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"Burbank, CA - BUR",
+	"display_name":"Burbank, CA - BUR",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"CHS":{
+	"code":"CHS",
+	"station_name":"Charleston",
+	"state_federal_unit":"SC",
+	"country_code":"US",
+	"airport_list_name":"Charleston, SC - CHS",
+	"display_name":"Charleston, SC - CHS",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"CLT":{
+	"code":"CLT",
+	"station_name":"Charlotte",
+	"state_federal_unit":"NC",
+	"country_code":"US",
+	"airport_list_name":"Charlotte, NC - CLT",
+	"display_name":"Charlotte, NC - CLT",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"MDW":{
+	"code":"MDW",
+	"station_name":"Chicago (Midway)",
+	"state_federal_unit":"IL",
+	"country_code":"US",
+	"airport_list_name":"Chicago (Midway), IL - MDW",
+	"display_name":"Chicago (Midway), IL - MDW",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"CNN":{
+	"code":"CNN",
+	"station_name":"Cincinnati Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"Cincinnati Area",
+	"display_name":"Cincinnati Area, - CNN",
+	"children":["DAY"],
+	"mkt_carrier_codes":[]
+	},
+"CLE":{
+	"code":"CLE",
+	"station_name":"Cleveland",
+	"state_federal_unit":"OH",
+	"country_code":"US",
+	"airport_list_name":"Cleveland, OH - CLE",
+	"display_name":"Cleveland, OH - CLE",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"CVL":{
+	"code":"CVL",
+	"station_name":"Cleveland Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"Cleveland Area",
+	"display_name":"Cleveland Area, - CVL",
+	"children":["CAK","CLE"],
+	"mkt_carrier_codes":[]
+	},
+"CMH":{
+	"code":"CMH",
+	"station_name":"Columbus",
+	"state_federal_unit":"OH",
+	"country_code":"US",
+	"airport_list_name":"Columbus, OH - CMH",
+	"display_name":"Columbus, OH - CMH",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"CRP":{
+	"code":"CRP",
+	"station_name":"Corpus Christi",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"Corpus Christi, TX - CRP",
+	"display_name":"Corpus Christi, TX - CRP",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"DAL":{
+	"code":"DAL",
+	"station_name":"Dallas (Love Field)",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"Dallas (Love Field), TX - DAL",
+	"display_name":"Dallas (Love Field), TX - DAL",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"DAY":{
+	"code":"DAY",
+	"station_name":"Dayton",
+	"state_federal_unit":"OH",
+	"country_code":"US",
+	"airport_list_name":"Dayton, OH - DAY",
+	"display_name":"Dayton, OH - DAY",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"DEN":{
+	"code":"DEN",
+	"station_name":"Denver",
+	"state_federal_unit":"CO",
+	"country_code":"US",
+	"airport_list_name":"Denver, CO - DEN",
+	"display_name":"Denver, CO - DEN",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"DSM":{
+	"code":"DSM",
+	"station_name":"Des Moines",
+	"state_federal_unit":"IA",
+	"country_code":"US",
+	"airport_list_name":"Des Moines, IA - DSM",
+	"display_name":"Des Moines, IA - DSM",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"DTW":{
+	"code":"DTW",
+	"station_name":"Detroit",
+	"state_federal_unit":"MI",
+	"country_code":"US",
+	"airport_list_name":"Detroit, MI - DTW",
+	"display_name":"Detroit, MI - DTW",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"ELP":{
+	"code":"ELP",
+	"station_name":"El Paso",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"El Paso, TX - ELP",
+	"display_name":"El Paso, TX - ELP",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"FNT":{
+	"code":"FNT",
+	"station_name":"Flint",
+	"state_federal_unit":"MI",
+	"country_code":"US",
+	"airport_list_name":"Flint, MI - FNT",
+	"display_name":"Flint, MI - FNT",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"FLL":{
+	"code":"FLL",
+	"station_name":"Ft. Lauderdale",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"Ft. Lauderdale, FL - FLL",
+	"display_name":"Ft. Lauderdale, FL - FLL",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"RSW":{
+	"code":"RSW",
+	"station_name":"Ft. Myers",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"Ft. Myers, FL - RSW",
+	"display_name":"Ft. Myers, FL - RSW",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"GRR":{
+	"code":"GRR",
+	"station_name":"Grand Rapids",
+	"state_federal_unit":"MI",
+	"country_code":"US",
+	"airport_list_name":"Grand Rapids, MI - GRR",
+	"display_name":"Grand Rapids, MI - GRR",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"GSP":{
+	"code":"GSP",
+	"station_name":"Greenville/Spartanburg",
+	"state_federal_unit":"SC",
+	"country_code":"US",
+	"airport_list_name":"Greenville/Spartanburg, SC - GSP",
+	"display_name":"Greenville/Spartanburg, SC - GSP",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"HRL":{
+	"code":"HRL",
+	"station_name":"Harlingen",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"Harlingen, TX - HRL",
+	"display_name":"Harlingen, TX - HRL",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"BDL":{
+	"code":"BDL",
+	"station_name":"Hartford",
+	"state_federal_unit":"CT",
+	"country_code":"US",
+	"airport_list_name":"Hartford, CT - BDL",
+	"display_name":"Hartford, CT - BDL",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"HOU":{
+	"code":"HOU",
+	"station_name":"Houston (Hobby)",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"Houston (Hobby), TX - HOU",
+	"display_name":"Houston (Hobby), TX - HOU",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"IND":{
+	"code":"IND",
+	"station_name":"Indianapolis",
+	"state_federal_unit":"IN",
+	"country_code":"US",
+	"airport_list_name":"Indianapolis, IN - IND",
+	"display_name":"Indianapolis, IN - IND",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"JAN":{
+	"code":"JAN",
+	"station_name":"Jackson",
+	"state_federal_unit":"MS",
+	"country_code":"US",
+	"airport_list_name":"Jackson, MS - JAN",
+	"display_name":"Jackson, MS - JAN",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"JAX":{
+	"code":"JAX",
+	"station_name":"Jacksonville",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"Jacksonville, FL - JAX",
+	"display_name":"Jacksonville, FL - JAX",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"MCI":{
+	"code":"MCI",
+	"station_name":"Kansas City",
+	"state_federal_unit":"MO",
+	"country_code":"US",
+	"airport_list_name":"Kansas City, MO - MCI",
+	"display_name":"Kansas City, MO - MCI",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"EYW":{
+	"code":"EYW",
+	"station_name":"Key West",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"Key West, FL - EYW",
+	"display_name":"Key West, FL - EYW",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"LAS":{
+	"code":"LAS",
+	"station_name":"Las Vegas",
+	"state_federal_unit":"NV",
+	"country_code":"US",
+	"airport_list_name":"Las Vegas, NV - LAS",
+	"display_name":"Las Vegas, NV - LAS",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"LIT":{
+	"code":"LIT",
+	"station_name":"Little Rock",
+	"state_federal_unit":"AR",
+	"country_code":"US",
+	"airport_list_name":"Little Rock, AR - LIT",
+	"display_name":"Little Rock, AR - LIT",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"ISP":{
+	"code":"ISP",
+	"station_name":"Long Island/Islip",
+	"state_federal_unit":"NY",
+	"country_code":"US",
+	"airport_list_name":"Long Island/Islip, NY - ISP",
+	"display_name":"Long Island/Islip, NY - ISP",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"LAX":{
+	"code":"LAX",
+	"station_name":"Los Angeles",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"Los Angeles, CA - LAX",
+	"display_name":"Los Angeles, CA - LAX",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"LOS":{
+	"code":"LOS",
+	"station_name":"Los Angeles Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"Los Angeles Area",
+	"display_name":"Los Angeles Area, - LOS",
+	"children":["BUR","LAX","ONT","SNA"],
+	"mkt_carrier_codes":[]
+	},
+"SDF":{
+	"code":"SDF",
+	"station_name":"Louisville",
+	"state_federal_unit":"KY",
+	"country_code":"US",
+	"airport_list_name":"Louisville, KY - SDF",
+	"display_name":"Louisville, KY - SDF",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"LBB":{
+	"code":"LBB",
+	"station_name":"Lubbock",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"Lubbock, TX - LBB",
+	"display_name":"Lubbock, TX - LBB",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"MHT":{
+	"code":"MHT",
+	"station_name":"Manchester",
+	"state_federal_unit":"NH",
+	"country_code":"US",
+	"airport_list_name":"Manchester, NH - MHT",
+	"display_name":"Manchester, NH - MHT",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"MEM":{
+	"code":"MEM",
+	"station_name":"Memphis",
+	"state_federal_unit":"TN",
+	"country_code":"US",
+	"airport_list_name":"Memphis, TN - MEM",
+	"display_name":"Memphis, TN - MEM",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"MMA":{
+	"code":"MMA",
+	"station_name":"Miami Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"Miami Area",
+	"display_name":"Miami Area, - MMA",
+	"children":["FLL"],
+	"mkt_carrier_codes":[]
+	},
+"MAF":{
+	"code":"MAF",
+	"station_name":"Midland/Odessa",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"Midland/Odessa, TX - MAF",
+	"display_name":"Midland/Odessa, TX - MAF",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"MKE":{
+	"code":"MKE",
+	"station_name":"Milwaukee",
+	"state_federal_unit":"WI",
+	"country_code":"US",
+	"airport_list_name":"Milwaukee, WI - MKE",
+	"display_name":"Milwaukee, WI - MKE",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"MSP":{
+	"code":"MSP",
+	"station_name":"Minneapolis/St. Paul (Terminal 2)",
+	"state_federal_unit":"MN",
+	"country_code":"US",
+	"airport_list_name":"Minneapolis/St. Paul (Terminal 2), MN - MSP",
+	"display_name":"Minneapolis/St. Paul (Terminal 2), MN - MSP",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"BNA":{
+	"code":"BNA",
+	"station_name":"Nashville",
+	"state_federal_unit":"TN",
+	"country_code":"US",
+	"airport_list_name":"Nashville, TN - BNA",
+	"display_name":"Nashville, TN - BNA",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"MSY":{
+	"code":"MSY",
+	"station_name":"New Orleans",
+	"state_federal_unit":"LA",
+	"country_code":"US",
+	"airport_list_name":"New Orleans, LA - MSY",
+	"display_name":"New Orleans, LA - MSY",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"NWY":{
+	"code":"NWY",
+	"station_name":"New York Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"New York Area",
+	"display_name":"New York Area, - NWY",
+	"children":["ISP","LGA","EWR"],
+	"mkt_carrier_codes":[]
+	},
+"LGA":{
+	"code":"LGA",
+	"station_name":"New York (LaGuardia)",
+	"state_federal_unit":"NY",
+	"country_code":"US",
+	"airport_list_name":"New York (LaGuardia), NY - LGA",
+	"display_name":"New York (LaGuardia), NY - LGA",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"EWR":{
+	"code":"EWR",
+	"station_name":"Newark",
+	"state_federal_unit":"NJ",
+	"country_code":"US",
+	"airport_list_name":"Newark, NJ - EWR",
+	"display_name":"Newark, NJ - EWR",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"ORF":{
+	"code":"ORF",
+	"station_name":"Norfolk",
+	"state_federal_unit":"VA",
+	"country_code":"US",
+	"airport_list_name":"Norfolk, VA - ORF",
+	"display_name":"Norfolk, VA - ORF",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"NFB":{
+	"code":"NFB",
+	"station_name":"Northwest Florida Beaches Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"Northwest Florida Beaches Area",
+	"display_name":"Northwest Florida Beaches Area, - NFB",
+	"children":["ECP","PNS"],
+	"mkt_carrier_codes":[]
+	},
+"OAK":{
+	"code":"OAK",
+	"station_name":"Oakland",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"Oakland, CA - OAK",
+	"display_name":"Oakland, CA - OAK",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"OKC":{
+	"code":"OKC",
+	"station_name":"Oklahoma City",
+	"state_federal_unit":"OK",
+	"country_code":"US",
+	"airport_list_name":"Oklahoma City, OK - OKC",
+	"display_name":"Oklahoma City, OK - OKC",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"OMA":{
+	"code":"OMA",
+	"station_name":"Omaha",
+	"state_federal_unit":"NE",
+	"country_code":"US",
+	"airport_list_name":"Omaha, NE - OMA",
+	"display_name":"Omaha, NE - OMA",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"ONT":{
+	"code":"ONT",
+	"station_name":"Ontario/LA",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"Ontario/LA, CA - ONT",
+	"display_name":"Ontario/LA, CA - ONT",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"SNA":{
+	"code":"SNA",
+	"station_name":"Orange County/Santa Ana",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"Orange County/Santa Ana, CA - SNA",
+	"display_name":"Orange County/Santa Ana, CA - SNA",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"MCO":{
+	"code":"MCO",
+	"station_name":"Orlando",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"Orlando, FL - MCO",
+	"display_name":"Orlando, FL - MCO",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"ECP":{
+	"code":"ECP",
+	"station_name":"Panama City Beach",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"Panama City Beach, FL - ECP",
+	"display_name":"Panama City Beach, FL - ECP",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"PNS":{
+	"code":"PNS",
+	"station_name":"Pensacola",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"Pensacola, FL - PNS",
+	"display_name":"Pensacola, FL - PNS",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"PHL":{
+	"code":"PHL",
+	"station_name":"Philadelphia",
+	"state_federal_unit":"PA",
+	"country_code":"US",
+	"airport_list_name":"Philadelphia, PA - PHL",
+	"display_name":"Philadelphia, PA - PHL",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"PHX":{
+	"code":"PHX",
+	"station_name":"Phoenix",
+	"state_federal_unit":"AZ",
+	"country_code":"US",
+	"airport_list_name":"Phoenix, AZ - PHX",
+	"display_name":"Phoenix, AZ - PHX",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"PIT":{
+	"code":"PIT",
+	"station_name":"Pittsburgh",
+	"state_federal_unit":"PA",
+	"country_code":"US",
+	"airport_list_name":"Pittsburgh, PA - PIT",
+	"display_name":"Pittsburgh, PA - PIT",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"PDX":{
+	"code":"PDX",
+	"station_name":"Portland",
+	"state_federal_unit":"OR",
+	"country_code":"US",
+	"airport_list_name":"Portland, OR - PDX",
+	"display_name":"Portland, OR - PDX",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"PWM":{
+	"code":"PWM",
+	"station_name":"Portland",
+	"state_federal_unit":"ME",
+	"country_code":"US",
+	"airport_list_name":"Portland, ME - PWM",
+	"display_name":"Portland, ME - PWM",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"PVD":{
+	"code":"PVD",
+	"station_name":"Providence",
+	"state_federal_unit":"RI",
+	"country_code":"US",
+	"airport_list_name":"Providence, RI - PVD",
+	"display_name":"Providence, RI - PVD",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"RDU":{
+	"code":"RDU",
+	"station_name":"Raleigh/Durham",
+	"state_federal_unit":"NC",
+	"country_code":"US",
+	"airport_list_name":"Raleigh/Durham, NC - RDU",
+	"display_name":"Raleigh/Durham, NC - RDU",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"RNO":{
+	"code":"RNO",
+	"station_name":"Reno/Tahoe",
+	"state_federal_unit":"NV",
+	"country_code":"US",
+	"airport_list_name":"Reno/Tahoe, NV - RNO",
+	"display_name":"Reno/Tahoe, NV - RNO",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"RIC":{
+	"code":"RIC",
+	"station_name":"Richmond",
+	"state_federal_unit":"VA",
+	"country_code":"US",
+	"airport_list_name":"Richmond, VA - RIC",
+	"display_name":"Richmond, VA - RIC",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"ROC":{
+	"code":"ROC",
+	"station_name":"Rochester",
+	"state_federal_unit":"NY",
+	"country_code":"US",
+	"airport_list_name":"Rochester, NY - ROC",
+	"display_name":"Rochester, NY - ROC",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"SMF":{
+	"code":"SMF",
+	"station_name":"Sacramento",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"Sacramento, CA - SMF",
+	"display_name":"Sacramento, CA - SMF",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"SLC":{
+	"code":"SLC",
+	"station_name":"Salt Lake City",
+	"state_federal_unit":"UT",
+	"country_code":"US",
+	"airport_list_name":"Salt Lake City, UT - SLC",
+	"display_name":"Salt Lake City, UT - SLC",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"SAT":{
+	"code":"SAT",
+	"station_name":"San Antonio",
+	"state_federal_unit":"TX",
+	"country_code":"US",
+	"airport_list_name":"San Antonio, TX - SAT",
+	"display_name":"San Antonio, TX - SAT",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"SAN":{
+	"code":"SAN",
+	"station_name":"San Diego",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"San Diego, CA - SAN",
+	"display_name":"San Diego, CA - SAN",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"SFO":{
+	"code":"SFO",
+	"station_name":"San Francisco",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"San Francisco, CA - SFO",
+	"display_name":"San Francisco, CA - SFO",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"SFC":{
+	"code":"SFC",
+	"station_name":"San Francisco Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"San Francisco Area",
+	"display_name":"San Francisco Area, - SFC",
+	"children":["OAK","SFO","SJC"],
+	"mkt_carrier_codes":[]
+	},
+"SJC":{
+	"code":"SJC",
+	"station_name":"San Jose",
+	"state_federal_unit":"CA",
+	"country_code":"US",
+	"airport_list_name":"San Jose, CA - SJC",
+	"display_name":"San Jose, CA - SJC",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"SJU":{
+	"code":"SJU",
+	"station_name":"San Juan",
+	"state_federal_unit":"PR",
+	"country_code":"US",
+	"airport_list_name":"San Juan, PR - SJU",
+	"display_name":"San Juan, PR - SJU",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"SEA":{
+	"code":"SEA",
+	"station_name":"Seattle/Tacoma",
+	"state_federal_unit":"WA",
+	"country_code":"US",
+	"airport_list_name":"Seattle/Tacoma, WA - SEA",
+	"display_name":"Seattle/Tacoma, WA - SEA",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"GEG":{
+	"code":"GEG",
+	"station_name":"Spokane",
+	"state_federal_unit":"WA",
+	"country_code":"US",
+	"airport_list_name":"Spokane, WA - GEG",
+	"display_name":"Spokane, WA - GEG",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"STL":{
+	"code":"STL",
+	"station_name":"St. Louis",
+	"state_federal_unit":"MO",
+	"country_code":"US",
+	"airport_list_name":"St. Louis, MO - STL",
+	"display_name":"St. Louis, MO - STL",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"TPA":{
+	"code":"TPA",
+	"station_name":"Tampa",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"Tampa, FL - TPA",
+	"display_name":"Tampa, FL - TPA",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"TUS":{
+	"code":"TUS",
+	"station_name":"Tucson",
+	"state_federal_unit":"AZ",
+	"country_code":"US",
+	"airport_list_name":"Tucson, AZ - TUS",
+	"display_name":"Tucson, AZ - TUS",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"TUL":{
+	"code":"TUL",
+	"station_name":"Tulsa",
+	"state_federal_unit":"OK",
+	"country_code":"US",
+	"airport_list_name":"Tulsa, OK - TUL",
+	"display_name":"Tulsa, OK - TUL",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"IAD":{
+	"code":"IAD",
+	"station_name":"Washington (Dulles)",
+	"state_federal_unit":"DC",
+	"country_code":"US",
+	"airport_list_name":"Washington (Dulles), DC - IAD",
+	"display_name":"Washington (Dulles), DC - IAD",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	},
+"DCA":{
+	"code":"DCA",
+	"station_name":"Washington (Reagan National)",
+	"state_federal_unit":"DC",
+	"country_code":"US",
+	"airport_list_name":"Washington (Reagan National), DC - DCA",
+	"display_name":"Washington (Reagan National), DC - DCA",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"WDC":{
+	"code":"WDC",
+	"station_name":"Washington DC Area",
+	"state_federal_unit":"",
+	"country_code":"",
+	"airport_list_name":"Washington DC Area",
+	"display_name":"Washington DC Area, - WDC",
+	"children":["BWI","IAD","DCA"],
+	"mkt_carrier_codes":[]
+	},
+"PBI":{
+	"code":"PBI",
+	"station_name":"West Palm Beach",
+	"state_federal_unit":"FL",
+	"country_code":"US",
+	"airport_list_name":"West Palm Beach, FL - PBI",
+	"display_name":"West Palm Beach, FL - PBI",
+	"children":[],	
+	"mkt_carrier_codes":["WN","FL"]
+	},
+"ICT":{
+	"code":"ICT",
+	"station_name":"Wichita",
+	"state_federal_unit":"KS",
+	"country_code":"US",
+	"airport_list_name":"Wichita, KS - ICT",
+	"display_name":"Wichita, KS - ICT",
+	"children":[],	
+	"mkt_carrier_codes":["WN"]
+	}}
