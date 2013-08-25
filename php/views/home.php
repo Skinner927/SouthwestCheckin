@@ -130,16 +130,8 @@ require('config.php');
                 <input type="password" autocomplete="off" name="password" placeholder="New Password" />  
               </div>
               <div class="span3">
-                <div class="input-append date" data-bind="dateTimePicker: true">
-                  <input data-format="MM/dd/yyyy HH:mm PP" type="text" name="datetime" value="" placeholder="Flight Date\Time" />
-                  <span class="add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                  </span>
-                </div>
-                <input style="margin-top:5px;" type="text" autocomplete="off" name="email" placeholder="Email" />
-              </div>
-              <div class="span2">
-                <button style="margin-top:40px;" class="btn btn-success" type="submit" style="margin-right: 5px"><i class="icon-plus icon-white"></i> Add</button>
+                <input type="text" autocomplete="off" name="email" placeholder="Email" />
+                <button class="btn btn-success" type="submit"><i class="icon-plus icon-white"></i> Add</button>
               </div>
             </div>
           </form>
@@ -191,7 +183,11 @@ require('config.php');
         <!-- /ko -->
       </div>
       <!-- /List View -->
-      
+      <!-- Reports View -->
+      <div data-bind="visible: $root.currentPage() == 'Reports'">
+        <h2>Reports</h2>
+      </div>
+      <!-- /Reports View -->
     </div> <!-- /container -->
     
     <div class="modal hide fade" id="modal-password">

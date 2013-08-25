@@ -18,11 +18,14 @@
 */
 require_once('db.php');
 require('config.php');
+require('scraper.php');
 
 // Database Path
 $sqliteDb = '../SWCheckin.sqlite3';
 // Default Table
 define ("TABLECHECKIN", "checkin");
+// Airport table
+define ("TABLEAIRPORT", "airports");
 
 // Change quotes for SQLITE3
 DB::$i = '"';
@@ -255,30 +258,35 @@ class Checkin {
   // Creates a new Checkin row
   public static function create($request) {
     // Get the post data
-    $data = json_decode(json_encode($request->data['data']));
+    $userData = json_decode(json_encode($request->data['data']));
     
     // Validate
-    $result = self::validate($data, array('fname', 'lname', 'email', 'confirmation', 'password', 'datetime'));
+    $result = self::validate($userData, array('fname', 'lname', 'email', 'confirmation', 'password'));
     if($result !== true) {
       return $result;
     }
     
     // Create password salt
-    $data->salt = bin2hex(openssl_random_pseudo_bytes(8));
-    $data->password = hash('sha512', $data->password.$data->salt);
+    $userData->salt = bin2hex(openssl_random_pseudo_bytes(8));
+    $userData->password = hash('sha512', $userData->password.$userData->salt);
     
     // UCase the Confirmation
-    $data->confirmation = strtoupper($data->confirmation);
+    $userData->confirmation = strtoupper($userData->confirmation);
     
-    // Fix the time
-    $data->datetime = self::convertDateTimeToUnix($data->datetime);
+    $userData->created = time();
     
-    $data->created = time();
+    $userData->success = 0;
     
-    $data->success = 0;
+    
+    // Now we ask the scraper to get our departure and return flight
+    $flights = Scraper::Flights($userData);
+    
+    
+    
+    
     
     // Stick it in the DB    
-    if(DB::insert(TABLECHECKIN, (array)$data) < 1)
+    if(DB::insert(TABLECHECKIN, (array)$userData) < 1)
       return array('error' => 'An unknown error occurred. Please try again.');
     
     // Nothing's wrong
