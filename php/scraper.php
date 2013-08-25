@@ -1,6 +1,6 @@
 <?php
 /*
-  Copyright (C) 2013  Dennis Skinner skinner927@gmail.coms
+  Copyright (C) 2013  Dennis Skinner skinner927@gmail.com
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ use Goutte\Client;
     // $userData -> fname, lname, email, confirmation
     function Flights($userData) {
       // Creates a new logger
-      $log = new KLogger('./logs');
+      $log = new KLogger('./logs/scraper');
       // Create a new web client
       $client = new Client();
 
