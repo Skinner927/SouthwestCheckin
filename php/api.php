@@ -38,9 +38,15 @@ DB::$c = new PDO('sqlite:'.$sqliteDb, '', '', array(
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ));
-
+    
 // The db is new, fill it
 if (isset($defaultFill) && $defaultFill === true) {
+  
+  // Create and fill the airport table
+  include 'db/airportfill.php';
+  DB::query($airportFill);
+  
+  // This is the checkin table
   DB::query('CREATE TABLE checkin (
     id INTEGER PRIMARY KEY, 
     fname TEXT, 
@@ -55,6 +61,7 @@ if (isset($defaultFill) && $defaultFill === true) {
     email TEXT
     )');
   
+  // test data, remove on release
   // Default passwords are: banana
   $checkin = array(
     'fname' => 'bob',
