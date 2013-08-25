@@ -24,7 +24,7 @@ $crawler = $client->getCrawler();
 
 // Debug so we can see
 echo '<h1>Response code: ' . $response->getStatus() . '</h1>';
-print $response->getContent();
+//print $response->getContent();
 
 
 // Verify the request was ok!

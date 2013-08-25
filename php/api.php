@@ -20,7 +20,7 @@ require_once('db.php');
 require('config.php');
 
 // Database Path
-$sqliteDb = '../checkin.sqlite3';
+$sqliteDb = '../SWCheckin.sqlite3';
 // Default Table
 define ("TABLECHECKIN", "checkin");
 
@@ -43,8 +43,11 @@ DB::$c = new PDO('sqlite:'.$sqliteDb, '', '', array(
 if (isset($defaultFill) && $defaultFill === true) {
   
   // Create and fill the airport table
-  include 'db/airportfill.php';
-  DB::query($airportFill);
+  require 'db/airportfill.php';
+  foreach(preg_split("/((\r?\n)|(\r\n?))/", $airportFill) as $line){
+    if(strlen($line) > 0)
+      DB::query($line);
+  }
   
   // This is the checkin table
   DB::query('CREATE TABLE checkin (

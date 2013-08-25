@@ -1,31 +1,6 @@
 <?php
 $airportFill = '
-----
--- phpLiteAdmin database dump (http://phpliteadmin.googlecode.com)
--- phpLiteAdmin version: 1.9.4.1
--- Exported: 8:45pm on August 24, 2013 (EDT)
--- database file: ..\southwesttest\Airports.sqlite3
-----
-BEGIN TRANSACTION;
-
-----
--- Drop table for Airports
-----
-DROP TABLE "Airports";
-
-----
--- Table structure for Airports
-----
-CREATE TABLE Airports (
-    id INTEGER PRIMARY KEY, 
-    airport TEXT, 
-    utc_offset NUMERIC, 
-    dst NUMERIC
-    );
-
-----
--- Data dump for Airports, a total of 89 rows
-----
+CREATE TABLE Airports (id INTEGER PRIMARY KEY,airport TEXT,utc_offset NUMERIC,dst NUMERIC);
 INSERT INTO "Airports" ("id","airport","utc_offset","dst") VALUES ("1","CAK","-5","1");
 INSERT INTO "Airports" ("id","airport","utc_offset","dst") VALUES ("2","ALB","-5","1");
 INSERT INTO "Airports" ("id","airport","utc_offset","dst") VALUES ("3","ABQ","-7","1");
@@ -115,6 +90,5 @@ INSERT INTO "Airports" ("id","airport","utc_offset","dst") VALUES ("86","IAD","-
 INSERT INTO "Airports" ("id","airport","utc_offset","dst") VALUES ("87","DCA","-5","1");
 INSERT INTO "Airports" ("id","airport","utc_offset","dst") VALUES ("88","PBI","-5","1");
 INSERT INTO "Airports" ("id","airport","utc_offset","dst") VALUES ("89","ICT","-6","1");
-COMMIT;
 ';
 ?>
