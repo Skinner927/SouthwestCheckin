@@ -16,12 +16,11 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-require('config.php');
 ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title><?php echo $site['title'];?></title>
+    <title><?php echo $title;?></title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -100,7 +99,7 @@ require('config.php');
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#"><?php echo $site['title'];?></a>
+          <a class="brand" href="#"><?php echo $title;?></a>
           <div class="nav-collapse collapse">
             <ul class="nav" data-bind="foreach: pages">
               <li data-bind="css: { active: $data == $root.currentPage() }, click: $root.goToPage"><a href="#" data-bind="text: $data"></a></li>

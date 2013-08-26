@@ -17,7 +17,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 require_once('db.php');
-require('config.php');
+require_once('config.php');
 require('scraper.php');
 
 // Database Path

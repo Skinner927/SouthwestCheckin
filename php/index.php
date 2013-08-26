@@ -16,12 +16,14 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-require_once 'api.php';
-require_once 'flight/Flight.php';
+require_once('api.php');
+require_once('config.php');
+require_once('flight/Flight.php');
 
 // This is the only user route for this single page app
 Flight::route('/', function(){
-    Flight::render('home.php');
+    global $site;
+    Flight::render('home.php', $site);
 });
 
 // Returns Checkin rows
