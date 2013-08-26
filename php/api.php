@@ -21,11 +21,7 @@ require('config.php');
 require('scraper.php');
 
 // Database Path
-$sqliteDb = '../SWCheckin.sqlite3';
-// Default Table
-define ("TABLECHECKIN", "checkin");
-// Airport table
-define ("TABLEAIRPORT", "airports");
+$sqliteDb = $db['main'];
 
 // Change quotes for SQLITE3
 DB::$i = '"';

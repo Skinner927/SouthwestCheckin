@@ -1,4 +1,48 @@
 <?php
+
+$timezone = timezone_name_from_abbr(null, -7*60*60, 0);
+echo var_dump($timezone);
+$flightTime = new DateTime('Tuesday, August 13, 2013 05:30 PM');
+
+
+require_once('db.php');
+
+// Database Path
+$sqliteDb = '../SWCheckin.sqlite3';
+
+// Change quotes for SQLITE3
+DB::$i = '"';
+
+// Connect to the database
+DB::$c = new PDO('sqlite:'.$sqliteDb, '', '', array(
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ));    
+///- database connected
+
+$allAirports = DB::fetch('SELECT * FROM "airports"');
+
+foreach($allAirports as $airport) {
+  if((int)$airport->dst == 0)
+    continue;
+  
+  $timezone = timezone_name_from_abbr(null, ((int)$airport->utc_offset)*60*60, 0);
+  
+  $airport->timezone = $timezone;
+  
+  echo var_dump($airport);
+  
+  // save
+  DB::update('airports', (array)$airport, $airport->id);
+}
+
+
+
+
+
+
+exit; 
 /****
 Takes the phpAirports $airports array and finds the timezone via the imported Airports table and exports needed data to the compiledAirports table which 
 should later be exported and put in the main db or something like that.

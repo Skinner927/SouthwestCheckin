@@ -1,4 +1,43 @@
 <?php
+
+require_once 'scraper.php';
+require_once 'db.php';
+require_once 'config.php';
+
+
+// Database Path
+$sqliteDb = $db['main'];
+
+// Change quotes for SQLITE3
+DB::$i = '"';
+
+// If the DB is new, we default fill it
+if (!file_exists($sqliteDb)) {
+  $defaultFill = true;
+}
+
+// Connect to the database
+DB::$c = new PDO('sqlite:'.$sqliteDb, '', '', array(
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ));
+
+$userData = (object) array('fname' => 'John', 'lname' => 'Smith', 'confirmation' => 'A3GKN5');
+
+echo var_dump(Scraper::Flights($userData));
+
+
+
+
+
+
+
+
+
+exit;
+
+
 require_once 'goutte.phar';
 
 //http://api.symfony.com/2.0/Symfony/Component/BrowserKit/Client.html
@@ -14,7 +53,7 @@ $client->request('POST', 'http://localhost/SouthwestCheckin/southwesttest/flight
 //$client->request('POST', 'https://www.southwest.com/flight/view-air-reservation.html', 
   array(
     'searchType' => 'ConfirmationNumber',
-    'confirmationNumberFirstName' => 'John',
+    'confirmationNumberFirstName' => 'sJohn',
     'confirmationNumberLastName' => 'Smith',
     'confirmationNumber' => 'A3GKN5',
     'submitButton' => 'Continue'
