@@ -33,19 +33,19 @@ use Goutte\Client;
      * @param Crawler $flightBlock A Crawler whose root is an #airItinerary block
      * @return array datetime (UTC) and airport (FAA) from the block or null on failure
      */     
-    protected function GetFlights($flightBlock) {
+    protected static function GetFlights($flightBlock) {
       $log = new KLogger('./logs/scraper', KLogger::INFO);
       
-      $date = $flightBlock->filter('span.travelDateTime')->text();
-      $time = $flightBlock->filter('.departure>strong>span')->text();
-      $airport = $flightBlock->filter('td.routingDetailsStops>strong')->text();
+      $date = trim($flightBlock->filter('span.travelDateTime')->text());
+      $time = trim($flightBlock->filter('.departure>strong>span')->text());
+      $airport = trim($flightBlock->filter('td.routingDetailsStops>strong')->text());
       
       // Get the Airport's FAA code
       $matches = null;
       preg_match('/\((\w{3})\)/', $airport, $matches);
       if(!isset($matches[1])){
-        $log->Fatal('Could not find FAA code in: '.$airport);
-        throw new InvalidArgumentException('No FAA code found in: '.$airport);
+        $log->logFatal('Could not find FAA code in: '.$airport);
+        throw new InvalidArgumentException('No FAA code found');
       }
       $airport = $matches[1];
       
@@ -71,9 +71,9 @@ use Goutte\Client;
      * @param object $userData $userData should be an object with the following properties:
      *                         fname, lname, confirmation
      * @returns array Array of flights that were found. Each flight array contains 'date', 
-     *                'time' (in UTC), and FAA formatted 'airport'
+     *                'time' (in UTC), and FAA formatted 'airport' OR null on error
      */
-    public function Flights($userData) {
+    public static function Flights($userData) {
       // Creates a new logger
       $log = new KLogger('./logs/scraper', LOGLEVEL);
       // Create a new web client
