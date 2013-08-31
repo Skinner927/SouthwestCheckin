@@ -20,9 +20,10 @@ require_once('klogger.php');
 require_once('goutte.phar');
 require_once('config.php');
 
-define("LOGLEVEL", KLogger::INFO);
+require_once('../FirePHP/fb.php');
 
 use Goutte\Client;
+use Symfony\Component\DomCrawler\Crawler;
 
   class Scraper {
     
@@ -71,7 +72,7 @@ use Goutte\Client;
      * @param object $userData $userData should be an object with the following properties:
      *                         fname, lname, confirmation
      * @returns array Array of flights that were found. Each flight array contains 'date', 
-     *                'time' (in UTC), and FAA formatted 'airport' OR null on error
+     *                'time' (in UTC), and FAA formatted 'airport' OR string of error(s) OR null on fatal error
      */
     public static function Flights($userData) {
       // Creates a new logger
@@ -95,25 +96,37 @@ use Goutte\Client;
       
       // Verify response code
       if($response->getStatus() >= 400) {
-        $log->logFatal('Cannot get air reservations. Status code: '.$response->getStatus(), $client);
+        $log->logError('Cannot get air reservations. Status code: '.$response->getStatus(), $client);
+        return 'There was trouble accessing the Southwest website. Please try again (ERR:sc0-'.$response->getStatus().')';
       }
       
+      // See if there were errors on the page
+      $errors =$crawler->filter('div>#error_wrapper>ul')->filter('li')->each(function(Crawler $node, $i){        
+        // This takes off the SW error codes
+        return trim(substr($node->text(), 0, strpos($node->text(), '(')))."\n";
+      });
+      // Return the errors if we have them
+      if (count($errors) > 0) {
+        $log->logWarn(implode($errors));
+        return implode($errors);
+      }
+
       // Attempt to pull the flight data
       try {
         $depart = self::GetFlights($crawler->filter('#airItinerarydepart'));        
       } catch (InvalidArgumentException $e) {
-        $log->logFatal('airItinerarydepart contained no data');
+        $log->logCrit('airItinerarydepart contained no data', $crawler->html());
         return null;
       }
       
       try {
         $return = self::GetFlights($crawler->filter('#airItineraryreturn'));        
       } catch (InvalidArgumentException $e) {
-        $log->logFatal('airItineraryreturn contained no data');
+        $log->logCrit('airItineraryreturn contained no data', $crawler->html());
         return null;
       }
       
-      // If we didn't get an exceptions, we should have the flights
+      // If we got to here, we should have the flights
       return array($depart, $return);
       
     }

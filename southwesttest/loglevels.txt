@@ -1,0 +1,8 @@
+logEmerg    const EMERG  = 0;  // Emergency: system is unusable
+logAlert    const ALERT  = 1;  // Alert: action must be taken immediately
+logCrit     const CRIT   = 2;  // Critical: critical conditions
+logError    const ERR    = 3;  // Error: error conditions
+logWarn     const WARN   = 4;  // Warning: warning conditions
+logNotice   const NOTICE = 5;  // Notice: normal but significant condition
+logInfo     const INFO   = 6;  // Informational: informational messages
+logDebug    const DEBUG  = 7;  // Debug: debug messages

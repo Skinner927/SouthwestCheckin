@@ -1,6 +1,8 @@
 SouthwestCheckin
 ================
 
+THIS IS NOT FINISHED
+
 Requires php_openssl
 
 # Special Thanks

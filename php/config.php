@@ -12,5 +12,9 @@ $db['main'] = '../SWCheckin.sqlite3';
 define ("TABLECHECKIN", "checkin");
 // Airport table
 define ("TABLEAIRPORT", "airports");
+
+// Logging level
+require_once('klogger.php');
+define("LOGLEVEL", KLogger::INFO);
   
 ?>
