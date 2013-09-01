@@ -51,22 +51,23 @@ if (isset($defaultFill) && $defaultFill === true) {
   // This is the checkin table
   DB::query('CREATE TABLE checkin (
     id INTEGER PRIMARY KEY, 
-    fname TEXT, 
-    lname TEXT, 
-    confirmation TEXT,
+    fname TEXT COLLATE NOCASE, 
+    lname TEXT COLLATE NOCASE, 
+    confirmation TEXT COLLATE NOCASE,
     datetime NUMERIC,
-    created NUMERIC,
+    created NUMERIC DEFAULT CURRENT_TIMESTAMP,
     run NUMERIC,
     success NUMERIC,
     password TEXT,
     salt TEXT,
-    email TEXT
+    email TEXT,
+    initialized NUMERIC DEFAULT "0"
     )');
   
   // test data, remove on release
   // Default passwords are: banana
   $checkin = array(
-    'fname' => 'bob',
+    'fname' => 'BOB',
     'lname' => 'builder',
     'confirmation' => 'XYZ123',
     'datetime' => 1383932307,
@@ -268,22 +269,40 @@ class Checkin {
     
     // UCase the Confirmation
     $userData->confirmation = strtoupper($userData->confirmation);
+    // UCase first letter of fname and lname
+    $userData->fname = ucfirst($userData->fname);
+    $userData->lname = ucfirst($userData->lname);
     
+    // Add created time
     $userData->created = time();
-    
-    $userData->success = 0;
     
     
     // Now we ask the scraper to get our departure and return flight
     $flights = Scraper::Flights($userData);
+
+    // Check for errors
+    if(!is_array($flights)){
+      return array('error' => $flights);
+    }   
     
-    
-    
-    
-    
-    // Stick it in the DB    
-    if(DB::insert(TABLECHECKIN, (array)$userData) < 1)
-      return array('error' => 'An unknown error occurred. Please try again.');
+    // Stick it in the DB  
+    foreach($flights as $flight){
+      // Save the flight time
+      $userData->datetime = $flight['datetime'];
+
+      // Check if the flight has already been added 
+      // (We do this now instead of above because we want to check each individual flight)
+      $inDb = DB::row('SELECT * FROM "'.TABLECHECKIN.'" WHERE "fname"=? AND "lname"=? AND "confirmation"=? AND "datetime"=?',
+        array($userData->fname, $userData->lname, $userData->confirmation, $userData->datetime));
+            
+      // Maybe we should display an error message when a flight is a repeat? I don't know.
+      // Skip if the row exists
+      if($inDb !== false)
+        continue;
+      
+      if(DB::insert(TABLECHECKIN, (array)$userData) < 1)
+        return array('error' => 'An unknown error occurred. Please try again.');
+    }  
     
     // Nothing's wrong
     return array();    

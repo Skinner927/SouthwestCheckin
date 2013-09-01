@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="css/nprogress.css">
     <style type="text/css">
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -113,10 +114,13 @@
       
       <!-- List View -->
       <div data-bind="visible: $root.currentPage() == 'List'">
-        <h2>Add Flight</h2>
-        <div id="addSuccessAlert" class="alert alert-success">
-          <strong>Flight Added!</strong>
+        <div class="row" style="position: relative">
+          <h2 class="span2">Add Flight</h2>
+          <div id="addSuccessAlert" class="alert alert-success span9" style="position: absolute; bottom:0; right:0; margin-bottom:12px;">
+            <strong>Flight Added!</strong>
           </div>
+        </div>       
+        
         <div class="well well-small">
           <form id="newCheckinForm" style="margin:10px 0 0 0;" data-bind="submit: $root.addNewCheckin">
             <div class="container">
@@ -126,7 +130,7 @@
               </div>
               <div class="span3">
                 <input type="text" autocomplete="off" name="confirmation" placeholder="Confirmation #" /><br/>
-                <input type="password" autocomplete="off" name="password" placeholder="New Password" />  
+                <input type="password" autocomplete="off" name="password" placeholder="New Password (Optional)" />  
               </div>
               <div class="span3">
                 <input type="text" autocomplete="off" name="email" placeholder="Email" />
@@ -230,9 +234,11 @@
     <script src="js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
     <!-- Moment Date/Time library -->
     <script src="js/moment.min.js" type="text/javascript"></script>
+    <!-- Progress Bar -->
+    <script src="js/nprogress.js"></script>
     <!-- SPA -->
     <script src="js/spa.js" type="text/javascript"></script>
     <!-- Crypto Lib -->
-    <script src="js/sha512.js"></script>
+    <script src="js/sha512.js"></script>    
   </body>
 </html>

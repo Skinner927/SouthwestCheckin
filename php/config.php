@@ -1,4 +1,6 @@
 <?php
+require_once('../FirePHP/fb.php');
+
 // Set the timezone to local
 date_default_timezone_set('America/New_York');
 

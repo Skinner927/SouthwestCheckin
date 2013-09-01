@@ -20,8 +20,6 @@ require_once('klogger.php');
 require_once('goutte.phar');
 require_once('config.php');
 
-require_once('../FirePHP/fb.php');
-
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -108,7 +106,11 @@ use Symfony\Component\DomCrawler\Crawler;
       // Return the errors if we have them
       if (count($errors) > 0) {
         $log->logWarn(implode($errors));
-        return implode($errors);
+        
+        // The standard error message is super long and doesn't pertain to our end users. If that's the error, fix it
+        if(strpos(implode($errors), 'unable to retrieve your reservation from our database') === false)
+          return implode($errors);
+        return 'Could not find reservation. Please check your name and confirmation number.';
       }
 
       // Attempt to pull the flight data

@@ -34,7 +34,6 @@ function CheckinViewModel() {
   self.currentPage = ko.observable();
   self.currentCheckinEdit = ko.observable();
   self.currentCheckinBackup = null;  
-  // Later load this with AJAX
   self.checkinList = ko.observableArray([]);
   
   self.visibleCheckins = ko.computed(function(){
@@ -50,6 +49,7 @@ function CheckinViewModel() {
     $('#modal-password').data('checkin', checkin);    
     $('#modal-password').modal('show');
   };
+  // Called when the modal password has been submitted (assists above)
   self.removeCheckinFinish = function (btn) {
     pass = CryptoJS.SHA512(CryptoJS.SHA512($('#modal-password-password').val())).toString();
     console.log('pass: ', $('#modal-password-password').val());
@@ -124,24 +124,49 @@ function CheckinViewModel() {
   };
   
   // Add a new checkin
-  self.addNewCheckin = function() {
-    var data = $('#newCheckinForm').serializeObject();
+  self.addNewCheckin = function() {   
+    try {
+      // Start progress bar
+      NProgress.start();
     
-    data.password = CryptoJS.SHA512(CryptoJS.SHA512(data.password)).toString();
-    
-    $.post('api/new', {data: data}, function(result) {
-      if(result.error){
-        niceAlert(result.error);
-      } else {
-        // Clear the form
-        $('#newCheckinForm').find('input').val('');
-        // Refresh
-        self.loadList();
-        // Show success        
-        $('#addSuccessAlert').fadeIn(500).delay(5000).fadeOut(1000);       
-      }
-    }, 'json')
-    .error(function(){ niceAlert('An unknown error occurred. Please try again.');});
+      // Serialize form
+      var data = $('#newCheckinForm').serializeObject();
+      
+      // Lock inputs after serialization (FF freaks out otherwise)
+      $('form#newCheckinForm :input').attr('disabled', 'true');
+      
+      // Blank passwords are changed to something "random" (Better than blank I guess)
+      if(data.password.length < 1) {
+        var keylist="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*1234567890";
+        var temp='';
+        for (i=0;i<15;i++)
+          temp+=keylist.charAt(Math.floor(Math.random()*keylist.length));
+        data.password = temp;
+      }      
+      
+      // hash the password
+      data.password = CryptoJS.SHA512(CryptoJS.SHA512(data.password)).toString();
+      
+      $.post('api/new', {data: data}, function(result) {
+        if(result.error){
+          niceAlert(result.error);
+        } else {
+          // Clear the form
+          //$('#newCheckinForm').find('input').val('');
+          // Refresh
+          self.loadList();
+          // Show success        
+          $('#addSuccessAlert').fadeIn(500).delay(5000).fadeOut(1000);       
+        }
+      }, 'json')
+      .error(function(){ niceAlert('An unknown error occurred. Please try again.');})
+      .always(function(){ NProgress.done(); $('form#newCheckinForm :input').removeAttr('disabled'); });
+    } catch(e) {
+      console.error(e);
+      NProgress.done(); 
+      $('form.newCheckinForm :input').removeAttr('disabled');
+      niceAlert('An unknown error occurred. Please try again.');
+    }
   }
   
   // Load the list of checkins
@@ -278,5 +303,8 @@ $.fn.serializeObject = function()
 
 // Bind the VM
 ko.applyBindings(new CheckinViewModel());
+
+// Configure the progress bar
+NProgress.configure({ trickleRate:0.2, trickleSpeed: 700});
 
 

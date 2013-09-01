@@ -23,7 +23,7 @@ DB::$c = new PDO('sqlite:'.$sqliteDb, '', '', array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ));
 
-$userData = (object) array('fname' => 'John', 'lname' => 'Smiths', 'confirmation' => 'A3GKN5');
+$userData = (object) array('fname' => 'John', 'lname' => 'Smith', 'confirmation' => 'A3GKN5');
 
 echo var_dump(Scraper::Flights($userData));
 
