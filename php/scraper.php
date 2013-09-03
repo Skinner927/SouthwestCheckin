@@ -99,13 +99,13 @@ use Symfony\Component\DomCrawler\Crawler;
       }
       
       // See if there were errors on the page
-      $errors =$crawler->filter('div>#error_wrapper>ul')->filter('li')->each(function(Crawler $node, $i){        
+      $errors = $crawler->filter('div>#error_wrapper>ul')->filter('li')->each(function(Crawler $node, $i){        
         // This takes off the SW error codes
         return trim(substr($node->text(), 0, strpos($node->text(), '(')))."\n";
       });
       // Return the errors if we have them
       if (count($errors) > 0) {
-        $log->logWarn(implode($errors));
+        $log->logWarn(implode($errors), $userData);
         
         // The standard error message is super long and doesn't pertain to our end users. If that's the error, fix it
         if(strpos(implode($errors), 'unable to retrieve your reservation from our database') === false)

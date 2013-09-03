@@ -30,7 +30,8 @@ function CheckinViewModel() {
   
   // Data
   var self = this;
-  self.pages = ['List', 'Reports']; // Defined pages
+  //self.pages = ['List', 'Reports']; // Defined pages
+  self.pages = ['List']; // Defined pages
   self.currentPage = ko.observable();
   self.currentCheckinEdit = ko.observable();
   self.currentCheckinBackup = null;  
