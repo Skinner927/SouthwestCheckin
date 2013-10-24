@@ -152,8 +152,9 @@
           <div class="span3" data-bind="text: confirmation"></div>
           <div class="span3" data-bind="text: datetime"></div>
           <div class="span2">
-            <button class="btn btn-success" data-bind="click: $parent.editCheckin"><i class="icon-pencil icon-white"></i></button>
-            <button class="btn btn-danger" data-bind="click: $parent.removeCheckin"><i class="icon-remove icon-white"></i></button>
+            <!-- <button class="btn btn-success" data-bind="click: $parent.editCheckin"><i class="icon-pencil icon-white"></i></button> -->
+            <button class="btn btn-primary" ><i class="icon-info-sign icon-white"></i> Info</button>
+            <button class="btn btn-danger" data-bind="click: $parent.removeCheckin"><i class="icon-trash icon-white"></i> Delete</button>            
           </div>
         </div>
         <!-- Edit Block -->

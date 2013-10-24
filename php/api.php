@@ -160,7 +160,7 @@ class Checkin {
     return $d->format('U');    
   }
 
-  // Gets the checking with the specified id or all if no id
+  // Gets the checkin with the specified id or all if no id
   public static function get($id = 0) {    
     if($id == null || $id == 0)
       return DB::fetch('SELECT id, lname, fname, substr(confirmation, 1, 1) || "****" || substr(confirmation, -1, 1) as confirmation, datetime FROM "'.TABLECHECKIN.'" ORDER BY datetime, lname, fname');
@@ -265,6 +265,7 @@ class Checkin {
     
     // Create password salt
     $userData->salt = bin2hex(openssl_random_pseudo_bytes(8));
+    $originalPass = $userData->password;
     $userData->password = hash('sha512', $userData->password.$userData->salt);
     
     // UCase the Confirmation
@@ -300,12 +301,14 @@ class Checkin {
       if($inDb !== false)
         continue;
       
+      // All is good
       if(DB::insert(TABLECHECKIN, (array)$userData) < 1)
         return array('error' => 'An unknown error occurred. Please try again.');
     }  
     
     // Nothing's wrong
-    return array();    
+    $userData->password = $originalPassword;
+    return array('success' => self::GetInfo($userData));    
   }
 }
 ?>

@@ -32,7 +32,7 @@ use Symfony\Component\DomCrawler\Crawler;
      * @param Crawler $flightBlock A Crawler whose root is an #airItinerary block
      * @return array datetime (UTC) and airport (FAA) from the block or null on failure
      */     
-    protected static function GetFlights($flightBlock) {
+    protected static function GetFlights(Crawler $flightBlock) {
       $log = new KLogger('./logs/scraper', KLogger::INFO);
       
       $date = trim($flightBlock->filter('span.travelDateTime')->text());
